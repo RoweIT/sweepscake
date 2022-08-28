@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Series;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bakers', function (Blueprint $table) {
+        Schema::create('series', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique()->nullable(false);
             $table->string('name')->nullable(false);
-            $table->integer('age');
-            $table->string('from');
-            $table->string('job');
-            $table->string('bio');
-            $table->string('image_path');
-            $table->foreignIdFor(Series::class);
+            $table->date('start_on');
             $table->timestamps();
         });
     }
@@ -35,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bakers');
+        Schema::dropIfExists('series');
     }
 };

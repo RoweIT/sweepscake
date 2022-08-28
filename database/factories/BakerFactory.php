@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Baker;
+use App\Models\Series;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use JetBrains\PhpStorm\ArrayShape;
@@ -19,19 +20,16 @@ class BakerFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->unique()->firstName();
-        $slug = Str::slug($name);
-
         $imageNames = ['AMANDA', 'CHIGS', 'CRYSTELLE', 'FREYA', 'GEORGE', 'GUISEPPE', 'JAIRZENO', 'JURGEN', 'LIZZIE', 'MAGGIE', 'ROCHICA', 'TOM'];
 
         return [
-            'slug' => $slug,
-            'name' => $name,
+            'slug' => $this->faker->unique()->slug(),
+            'name' => $this->faker->unique()->firstName(),
             'age' => $this->faker->numberBetween(18, 80),
             'from' => $this->faker->city(),
             'job' => $this->faker->jobTitle(),
             'bio' => $this->faker->paragraph(),
-            'image_path' => 'images/bakers/2022/' . $this->faker->randomElement($imageNames) . '-740x740.jpg'
+            'image_path' => 'images/bakers/2021/' . $this->faker->randomElement($imageNames) . '-740x740.jpg',
         ];
     }
 }

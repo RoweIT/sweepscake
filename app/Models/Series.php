@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Baker extends Model
+class Series extends Model
 {
     use HasFactory;
 
-    public function series()
+    public function bakers()
     {
-        return $this->belongsTo(Series::class);
+        return $this->hasMany(Baker::class);
     }
 }
