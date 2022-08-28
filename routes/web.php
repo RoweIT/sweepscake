@@ -23,9 +23,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
+    Route::get('/bakers', [BakerController::class, 'index'])->name('bakers');
 });
-
-Route::get('/bakers', [BakerController::class, 'index']);
