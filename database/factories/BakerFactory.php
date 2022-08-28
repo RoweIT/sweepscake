@@ -31,7 +31,7 @@ class BakerFactory extends Factory
             'from' => $this->faker->city(),
             'job' => $this->faker->jobTitle(),
             'bio' => $this->faker->paragraph(),
-            'image_path' => 'images/bakers/2022' . $this->faker->randomElement($imageNames) . '-740x740.jpg'
+            'image_path' => 'images/bakers/2022/' . $this->faker->randomElement($imageNames) . '-740x740.jpg'
         ];
     }
 }
