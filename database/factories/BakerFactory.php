@@ -28,7 +28,7 @@ class BakerFactory extends Factory
             'age' => $this->faker->numberBetween(18, 80),
             'from' => $this->faker->city(),
             'job' => $this->faker->jobTitle(),
-            'bio' => $this->faker->paragraph(),
+            'bio' => mb_strimwidth($this->faker->paragraph(), 0, 255, '', 'UTF-8'),
             'image_path' => 'images/bakers/2021/' . $this->faker->randomElement($imageNames) . '-740x740.jpg',
         ];
     }
