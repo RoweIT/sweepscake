@@ -24,12 +24,17 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $profilePhotoPaths = ['avatar-1.png', 'avatar-1.jpg', 'avatar-1.jpg', 'avatar-4.png', 'avatar-5.jpg', 'avatar-6.png',
+            'avatar-7.png', 'avatar-8.jpg', 'avatar-9.png', 'avatar-10.png', 'avatar-11.png', 'avatar-12.jpg'];
+
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->unique()->name(),
+            'username' => $this->faker->unique()->userName(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
+            'profile_photo_path' => 'images/avatars/' . $this->faker->randomElement($profilePhotoPaths),
         ];
     }
 

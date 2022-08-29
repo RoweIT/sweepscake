@@ -14,8 +14,8 @@ class Sweepscake extends Model
         return $this->belongsTo(Series::class);
     }
 
-    public function participants()
+    public function users()
     {
-        return $this->belongsToMany(Participant::class)->using(ParticipantSweepscake::class);
+        return $this->belongsToMany(User::class)->using(SweepscakeUser::class);
     }
 }

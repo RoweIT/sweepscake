@@ -58,4 +58,10 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function sweepscakes()
+    {
+        return $this->hasMany(Sweepscake::class)->using(SweepscakeUser::class);
+    }
+
 }

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('age');
             $table->string('from');
             $table->string('job');
-            $table->string('bio');
+            $table->text('bio');
             $table->string('image_path');
             $table->foreignIdFor(Series::class);
             $table->timestamps();

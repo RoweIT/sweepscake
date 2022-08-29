@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class ParticipantSweepscake extends Pivot
+class SweepscakeUser extends Pivot
 {
 
 }

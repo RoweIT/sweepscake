@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('participant_sweepscake', function (Blueprint $table) {
+        Schema::create('sweepscake_user', function (Blueprint $table) {
             $table->foreignIdFor(\App\Models\Sweepscake::class);
-            $table->foreignIdFor(\App\Models\Participant::class);
+            $table->foreignIdFor(\App\Models\User::class);
+            $table->foreignIdFor(\App\Models\Baker::class)->nullable(true);
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('participant_sweepscake');
+        Schema::dropIfExists('sweepscake_user');
     }
 };

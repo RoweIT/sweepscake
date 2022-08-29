@@ -23,22 +23,21 @@ class DatabaseSeeder extends Seeder
             'password' => '$2y$10$bdyLgtuacfetxZ69rzfO1.7C2NoUAWb64wHedM6JYfnSkNzQM6OOO'
         ]);
 
-        $particpants2021 = Participant::factory(12)->create();
+        $particpants2021 = User::factory(12)->create();
 
         $gbbo2021 = Series::factory()
             ->has(Baker::factory()->count(12))
-            ->has(Sweepscake::factory()->count(1)->hasAttached($particpants2021))
             ->create([
                 'start_on' => Date::create(2021, 9, 21),
                 'name' => 'GBBO 2021 (Series 12)',
                 'slug' => 'gbbo_2021',
             ]);
 
-        $particpants2022 = Participant::factory(12)->create();
+        $particpants2022 = User::factory(12)->create();
 
         $gbbo2022 = Series::factory()
             ->has(Baker::factory()->count(12))
-            ->has(Sweepscake::factory()->count(2)->hasAttached($particpants2022))
+//            ->has(Sweepscake::factory()->count(2)->hasAttached($particpants2022))
             ->create([
                 'start_on' => Date::create(2022, 9, 13),
                 'name' => 'GBBO 2022 (Series 13)',
