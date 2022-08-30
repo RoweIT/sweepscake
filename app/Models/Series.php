@@ -9,12 +9,12 @@ class Series extends Model
 {
     use HasFactory;
 
-    public function bakers()
+    public function bakers(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Baker::class);
     }
 
-    public function sweepscakes()
+    public function sweepscakes(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Sweepscake::class);
     }
