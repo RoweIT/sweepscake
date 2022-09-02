@@ -5,24 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Sweepscake extends Model
 {
     use HasFactory;
 
-    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->using(SweepscakeUser::class);
     }
 
-    public function bakers(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    public function sweepscakeUser(): HasMany
     {
-        return $this->hasManyThrough(Baker::class, SweepscakeUser::class);
-    }
-
-    public function series(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Series::class);
+        return $this->hasMany(SweepscakeUser::class);
     }
 
     /**
@@ -32,7 +30,10 @@ class Sweepscake extends Model
     public function findAllBakersForSeries(): Collection
     {
         return $this->series()->firstOrFail()->bakers()->get();
-
     }
 
+    public function series(): BelongsTo
+    {
+        return $this->belongsTo(Series::class);
+    }
 }

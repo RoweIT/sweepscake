@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Baker extends Model
 {
@@ -24,8 +27,14 @@ class Baker extends Model
 
     }
 
-    public function series()
+    public function series(): BelongsTo
     {
         return $this->belongsTo(Series::class);
     }
+
+    public function sweepscakeUser(): BelongsToMany
+    {
+        return $this->belongsToMany(SweepscakeUser::class);
+    }
+
 }

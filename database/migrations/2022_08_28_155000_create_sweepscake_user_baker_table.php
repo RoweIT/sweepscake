@@ -14,9 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('sweepscake_user', function (Blueprint $table) {
+            $table->id();
             $table->foreignIdFor(\App\Models\Sweepscake::class);
             $table->foreignIdFor(\App\Models\User::class);
             $table->foreignIdFor(\App\Models\Baker::class)->nullable(true);
+            $table->timestamps();
         });
     }
 
