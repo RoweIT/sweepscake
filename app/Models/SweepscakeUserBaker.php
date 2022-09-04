@@ -19,7 +19,7 @@ class SweepscakeUserBaker extends Model
 
     public function sweepscake(): HasOne
     {
-        return $this->hasOne(Sweepscake::class, 'id', 'swepscake_id');
+        return $this->hasOne(Sweepscake::class, 'id', 'sweepscake_id');
     }
 
     public function user(): HasOne
