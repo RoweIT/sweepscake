@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class SweepscakeUser extends Pivot
+class SweepscakeUserBaker extends Model
 {
 
     public static function findAllForSweepscake(int $sweepscakeId): Collection

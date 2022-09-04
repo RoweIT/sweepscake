@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sweepscake_user', function (Blueprint $table) {
+        Schema::create('sweepscake_user_bakers', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Sweepscake::class);
             $table->foreignIdFor(\App\Models\User::class);
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sweepscake_user');
+        Schema::dropIfExists('sweepscake_user_bakers');
     }
 };

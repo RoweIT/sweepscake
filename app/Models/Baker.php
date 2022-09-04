@@ -27,14 +27,20 @@ class Baker extends Model
 
     }
 
+    public static function findBySlug(string $slug): Baker|null
+    {
+        return self::where('slug', '=', $slug)->first();
+    }
+
     public function series(): BelongsTo
     {
         return $this->belongsTo(Series::class);
     }
 
-    public function sweepscakeUser(): BelongsToMany
+    public function sweepscakeUserBaker(): HasMany
     {
-        return $this->belongsToMany(SweepscakeUser::class);
+        return $this->hasMany(SweepscakeUserBaker::class);
     }
+
 
 }

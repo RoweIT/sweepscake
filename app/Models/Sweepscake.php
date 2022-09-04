@@ -13,14 +13,9 @@ class Sweepscake extends Model
 {
     use HasFactory;
 
-    public function users(): BelongsToMany
+    public function sweepscakeUserBaker(): HasMany
     {
-        return $this->belongsToMany(User::class)->using(SweepscakeUser::class);
-    }
-
-    public function sweepscakeUser(): HasMany
-    {
-        return $this->hasMany(SweepscakeUser::class);
+        return $this->hasMany(SweepscakeUserBaker::class);
     }
 
     /**
