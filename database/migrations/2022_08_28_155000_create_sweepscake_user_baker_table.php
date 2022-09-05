@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Baker;
+use App\Models\Sweepscake;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +16,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sweepscake_user_bakers', function (Blueprint $table) {
+        $table = Schema::create('sweepscake_user_bakers', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Sweepscake::class);
-            $table->foreignIdFor(\App\Models\User::class);
-            $table->foreignIdFor(\App\Models\Baker::class)->nullable(true);
+            $table->foreignIdFor(Sweepscake::class);
+            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Baker::class)->nullable(true);
             $table->timestamps();
+
+            // only one user can have a baker for a given sweepscake
+            $table->unique(['sweepscake_id', 'baker_id']);
         });
     }
 

@@ -144,7 +144,14 @@ class DatabaseSeeder extends Seeder
                 $this->command->error("Unable to find bakers $bakerSlug to add to user $slug");
                 continue;
             }
-            SweepscakeUserBaker::create(['sweepscake_id' => $sweepscake21->id, 'user_id' => $user->id, 'baker_id' => $baker->id]);
+
+            /*
+             * These three ways of creating the relationship between the tables all work - I guess use the one that
+             * makes the most sense.
+             */
+            // SweepscakeUserBaker::create(['sweepscake_id' => $sweepscake21->id, 'user_id' => $user->id, 'baker_id' => $baker->id]);
+            // $baker->sweepscakes()->attach($sweepscake21->id, ['user_id' => $user->id]);
+            $user->sweepscakes()->attach($sweepscake21->id, ['baker_id' => $baker->id]);
         }
 
         $this->command->info("");
@@ -153,7 +160,43 @@ class DatabaseSeeder extends Seeder
         foreach ($sweepscake21->sweepscakeUserBaker as $sub) {
             $this->command->info($sub->user->name . ' => ' . $sub->baker->name);
         }
+
+        $paul = User::findByUsername('paul');
+        $sql = SweepscakeUserBaker::where('user_id', '=', $paul->id)->distinct('sweepscake_id')->toSql();
+        var_dump($sql);
+        $sweepscakes = SweepscakeUserBaker::where('user_id', '=', $paul->id)->distinct('sweepscake_id')->get();
+        foreach ($sweepscakes as $sweepscake) {
+            $this->command->info("$paul->name => $sweepscake->name");
+        }
+
+        $paul = User::findByUsername('paul');
+        $sql = $paul->sweepscakes()->toSql();
+        var_dump($sql);
+        $sweepscakes = $paul->sweepscakes;
+        foreach ($sweepscakes as $sweepscake) {
+            $this->command->info("$paul->name => $sweepscake->name");
+        }
+
+        $sql = $sweepscake21->users()->toSql();
+        var_dump($sql);
+        $users = $sweepscake21->users;
+        foreach ($users as $user) {
+            $this->command->info("$sweepscake21->name => $user->name");
+        }
+
+        $sql = $sweepscake21->bakers()->toSql();
+        var_dump($sql);
+        $bakers = $sweepscake21->bakers;
+        foreach ($bakers as $baker) {
+            $this->command->info("$sweepscake21->name => $baker->name");
+        }
+
+        $this->command->info("Baker $amanda->name has Sweepscakes");
+        foreach ($amanda->sweepscakes as $sweepscake) {
+            $this->command->info("$sweepscake21->name");
+        }
     }
+
 
     private static function createUsersFromUsernames(string $mappingStr, string $emailDomain): array
     {

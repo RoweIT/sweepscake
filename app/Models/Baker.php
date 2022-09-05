@@ -14,6 +14,8 @@ class Baker extends Model
     use HasFactory;
 
     /**
+     * Repository style function. Consider moving to a Repository class.
+     *
      * Find all the bakers available for a given sweepscake
      * @param int $sweepscakeId the sweepscake to find bakers for
      * @return Collection a collection of bakers
@@ -27,6 +29,13 @@ class Baker extends Model
 
     }
 
+    /**
+     * Repository style function. Consider moving to a Repository class.
+     *
+     * Find the baker with the given slug
+     * @param int $slug the slug to find
+     * @return Baker|null the baker found, or null if not found
+     */
     public static function findBySlug(string $slug): Baker|null
     {
         return self::where('slug', '=', $slug)->first();
@@ -40,6 +49,11 @@ class Baker extends Model
     public function sweepscakeUserBaker(): HasMany
     {
         return $this->hasMany(SweepscakeUserBaker::class);
+    }
+
+    public function sweepscakes(): BelongsToMany
+    {
+        return $this->belongsToMany(Sweepscake::class, SweepscakeUserBaker::class);
     }
 
 

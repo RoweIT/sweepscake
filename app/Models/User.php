@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -62,6 +64,13 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    /**
+     * Repository style function. Consider moving to a Repository class.
+     *
+     * Find a User given a username
+     * @param int $username the username to find
+     * @return User|null the USer recornd, or null if not found
+     */
     public static function findByUsername(string $username): User|null
     {
         return self::where('username', '=', $username)->first();
@@ -72,5 +81,13 @@ class User extends Authenticatable
         return $this->hasMany(SweepscakeUserBaker::class);
     }
 
-
+    /**
+     * Relationship between Sweepscakes and Users. A User may have one or more Bakers for a given Sweepscake so a User
+     * may appear more than once in a Sweepscake, hence the distinct.
+     * @return BelongsToMany
+     */
+    public function sweepscakes(): BelongsToMany
+    {
+        return $this->belongsToMany(Sweepscake::class, SweepscakeUserBaker::class)->distinct();
+    }
 }

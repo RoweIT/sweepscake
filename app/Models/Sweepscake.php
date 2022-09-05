@@ -19,16 +19,38 @@ class Sweepscake extends Model
     }
 
     /**
-     * Find all the bakers available for a given Sweepscake
-     * @return Collection a collection of Baker
+     * Relationship between Sweepscakes and Users. A User may have one or more Bakers for a given Sweepscake so a User
+     * may appear more than once in a Sweepscake, hence the distinct.
+     * @return BelongsToMany
      */
-    public function findAllBakersForSeries(): Collection
+    public function users(): BelongsToMany
     {
-        return $this->series()->firstOrFail()->bakers()->get();
+        return $this->belongsToMany(User::class, SweepscakeUserBaker::class)->distinct();
+    }
+
+    /**
+     * Relationship between Sweepscakes and Bakers. A User may have one or more Bakers for a given Sweepscake but
+     * a Baker should only appear once in a Sweepscake.
+     * @return BelongsToMany
+     */
+    public function bakers(): BelongsToMany
+    {
+        return $this->belongsToMany(Baker::class, SweepscakeUserBaker::class);
     }
 
     public function series(): BelongsTo
     {
         return $this->belongsTo(Series::class);
+    }
+
+    /**
+     * Repository style function. Consider moving to a Repository class.
+     *
+     * Find all the bakers available for a given Sweepscake
+     * @return Collection a collection of Baker
+     */
+    public function findAllBakersForSeries(): Collection
+    {
+        return $this->series->bakers;
     }
 }

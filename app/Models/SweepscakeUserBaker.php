@@ -14,7 +14,7 @@ class SweepscakeUserBaker extends Model
 
     public static function findAllForSweepscake(int $sweepscakeId): Collection
     {
-        return self::where('sweepscakes.id', '=', $sweepscakeId);
+        return self::where('sweepscakes_id', '=', $sweepscakeId);
     }
 
     public function sweepscake(): HasOne
