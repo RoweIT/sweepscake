@@ -15,6 +15,11 @@ class Series extends Model
         return $this->hasMany(Baker::class);
     }
 
+    public function weeks(): HasMany
+    {
+        return $this->hasMany(Week::class);
+    }
+
     public function sweepscakes(): HasMany
     {
         return $this->hasMany(Sweepscake::class);

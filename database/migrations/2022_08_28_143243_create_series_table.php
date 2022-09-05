@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('series', function (Blueprint $table) {
             $table->id();
-            $table->string('slug')->unique()->nullable(false);
-            $table->string('name')->nullable(false);
+            $table->string('slug')->unique();
+            $table->string('name');
             $table->date('start_on');
             $table->timestamps();
         });
