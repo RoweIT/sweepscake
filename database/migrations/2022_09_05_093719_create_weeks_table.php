@@ -16,16 +16,15 @@ return new class extends Migration
     {
         Schema::create('weeks', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Series::class);
             $table->integer('week_num');
             $table->string('theme');
             $table->string('signature');
             $table->string('technical');
             $table->string('showstopper');
-            $table->foreignIdFor(Series::class);
             $table->foreignIdFor(Baker::class, 'star_baker')->nullable(true);
             $table->foreignIdFor(Baker::class, 'eliminated')->nullable(true);
             $table->timestamps();
-
         });
     }
 
