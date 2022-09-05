@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Constants\Roles;
 use App\Models\Baker;
 use App\Models\Series;
 use App\Models\Sweepscake;
@@ -11,6 +12,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,6 +21,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $this->command->info("");
+        $this->command->info("Admin user");
+        $this->command->info("----------");
         $adminName = env('SEEDER_ADMIN_NAME', 'Admin');
         $adminEmail = env('SEEDER_ADMIN_EMAIL', 'admin@example.org');
         $adminPassword = env('SEEDER_ADMIN_PASSWORD', Str::uuid());
@@ -27,7 +33,9 @@ class DatabaseSeeder extends Seeder
             'email' => $adminEmail,
             'password' => bcrypt($adminPassword)
         ]);
-        $this->command->info("Created admin user with email: $admin->name and password $adminPassword");
+        $role = Role::findByName(Roles::ADMINISTRATOR);
+        $role->users()->attach($admin);
+        $this->command->info("Created admin Admin user, name: $admin->name and password: $adminPassword");
 
         $series21 = Series::create(['slug' => 'gbbo-series-12', 'name' => 'Great British Bake Off 2021 (series 12)',
             'start_on' => new Carbon('2021-09-21')]);
@@ -85,50 +93,44 @@ class DatabaseSeeder extends Seeder
         $syabira = Baker::create(['slug' => 'syabira-22', 'name' => 'Syabira', 'age' => 32, 'from' => 'London', 'job' => 'Cardiovascular Research Associate', 'image_path' => '2022/syabira.jpg', 'series_id' => $series22->id, 'bio' => "Syabira is a cardiovascular research associate from London and she was born in Malaysia. She comes from a huge family and now lives with her boyfriend Bradley. She started baking in 2017 and loves adding Malaysian twists to British bakes."]);
         $will = Baker::create(['slug' => 'will-22', 'name' => 'Will', 'age' => 45, 'from' => 'London', 'job' => 'Former Charity Director', 'image_path' => '2022/will.jpg', 'series_id' => $series22->id, 'bio' => "Will is a former charity director from London and he lives in London with his wife and three children. He has a passion for DIY and carpentry and utilises his hobbies in his baking. Loving the technical side of baking, he is a particular fan of using yeast."]);
 
-        $emailDomain = env('SEEDER_USERS_EMAIL_DOMAIN', 'example.org');
-        $userBakerMappings21 = env('SEEDER_USERS_2021', 'tom,dick,harry');
-        $users21 = self::createUsersFromUsernames($userBakerMappings21, $emailDomain);
-
-        $this->command->info("");
-        $this->command->info("Users for 2021");
-        $this->command->info("--------------");
-        foreach ($users21 as $user) {
-            $this->command->info("$user->name, $user->username, $user->email");
-        }
-
         $sweepscake21 = Sweepscake::create(['slug' => 'sweepscake-21', 'name' => 'Sweepscake 2021', 'series_id' => $series21->id]);
 
-        $sweepscake22 = Sweepscake::create(['slug' => 'sweepscake-22', 'name' => 'Sweepscake 2022', 'series_id' => $series22->id]);
-
+        $this->command->info("");
+        $this->command->info("Creating users for $series21->name");
+        $this->command->info("------------------");
+        $emailDomain = env('SEEDER_USERS_EMAIL_DOMAIN', 'example.org');
+        $userBakerMappings21 = env('SEEDER_USERS_2021', 'tom,dick,harry');
+        $users21 = self::createUsersFromUserBakerMappings($userBakerMappings21, $emailDomain);
 
         $this->command->info("");
-        $this->command->info("Bakers for $series21->name");
+        $this->command->info("All bakers for $series21->name");
         $this->command->info("----------------");
         foreach ($series21->bakers as $baker) {
             $this->command->info($baker->name);
         }
 
+//        $this->command->info("");
+//        $this->command->info("All Bakers for $sweepscake21->name");
+//        $this->command->info("----------------");
+//        $bakers = Baker::findAllForSweepscake($sweepscake21->id);
+//        foreach ($bakers as $baker) {
+//            $this->command->info($baker->name);
+//        }
+
         $this->command->info("");
-        $this->command->info("Bakers for $series22->name");
+        $this->command->info("Allocated bakers for $sweepscake21->name");
         $this->command->info("----------------");
-        foreach ($series22->bakers as $baker) {
+        foreach ($sweepscake21->bakers as $baker) {
             $this->command->info($baker->name);
         }
 
-        $this->command->info("");
-        $this->command->info("Bakers for $sweepscake21->name");
-        $this->command->info("----------------");
-        $bakers = Baker::findAllForSweepscake($sweepscake21->id);
-        foreach ($bakers as $baker) {
-            $this->command->info($baker->name);
-        }
-        $this->command->info("");
-        $this->command->info("Bakers for $sweepscake21->name");
-        $this->command->info("---------------");
-        $bakers = $sweepscake21->findAllBakersForSeries();
-        foreach ($bakers as $baker) {
-            $this->command->info($baker->name);
-        }
+//        $this->command->info("");
+//        $this->command->info("Bakers for $sweepscake21->name");
+//        $this->command->info("---------------");
+//        $bakers = $sweepscake21->findAllBakersForSeries();
+//        foreach ($bakers as $baker) {
+//            $this->command->info($baker->name);
+//        }
 
         $mappings = explode(",", $userBakerMappings21);
         foreach ($mappings as $mapping) {
@@ -157,50 +159,55 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->command->info("");
+        $this->command->info("Allocated bakers for $sweepscake21->name");
+        $this->command->info("----------------");
+        foreach ($sweepscake21->bakers as $baker) {
+            $this->command->info($baker->name);
+        }
+
+        $this->command->info("");
         $this->command->info("Sweepscake 2021 User/Baker");
         $this->command->info("---------------");
         foreach ($sweepscake21->sweepscakeUserBaker as $sub) {
             $this->command->info($sub->user->name . ' => ' . $sub->baker->name);
         }
 
-        $paul = User::findByUsername('paul');
-        $sql = SweepscakeUserBaker::where('user_id', '=', $paul->id)->distinct('sweepscake_id')->toSql();
-        var_dump($sql);
-        $sweepscakes = SweepscakeUserBaker::where('user_id', '=', $paul->id)->distinct('sweepscake_id')->get();
-        foreach ($sweepscakes as $sweepscake) {
-            $this->command->info("$paul->name => $sweepscake->name");
+        $sweepscake22 = Sweepscake::create(['slug' => 'sweepscake-22', 'name' => 'Sweepscake 2022', 'series_id' => $series22->id]);
+
+        $this->command->info("");
+        $this->command->info("Bakers for $series22->name");
+        $this->command->info("----------------");
+        foreach ($series22->bakers as $baker) {
+            $this->command->info($baker->name);
         }
 
         $paul = User::findByUsername('paul');
-        $sql = $paul->sweepscakes()->toSql();
-        var_dump($sql);
-        $sweepscakes = $paul->sweepscakes;
-        foreach ($sweepscakes as $sweepscake) {
+        foreach ($paul->sweepscakes as $sweepscake) {
             $this->command->info("$paul->name => $sweepscake->name");
         }
-
-        $sql = $sweepscake21->users()->toSql();
-        var_dump($sql);
-        $users = $sweepscake21->users;
-        foreach ($users as $user) {
-            $this->command->info("$sweepscake21->name => $user->name");
-        }
-
-        $sql = $sweepscake21->bakers()->toSql();
-        var_dump($sql);
-        $bakers = $sweepscake21->bakers;
-        foreach ($bakers as $baker) {
-            $this->command->info("$sweepscake21->name => $baker->name");
-        }
-
-        $this->command->info("Baker $amanda->name has Sweepscakes");
-        foreach ($amanda->sweepscakes as $sweepscake) {
-            $this->command->info("$sweepscake21->name");
-        }
+//
+//        $sql = $sweepscake21->users()->toSql();
+//        var_dump($sql);
+//        $users = $sweepscake21->users;
+//        foreach ($users as $user) {
+//            $this->command->info("$sweepscake21->name => $user->name");
+//        }
+//
+//        $sql = $sweepscake21->bakers()->toSql();
+//        var_dump($sql);
+//        $bakers = $sweepscake21->bakers;
+//        foreach ($bakers as $baker) {
+//            $this->command->info("$sweepscake21->name => $baker->name");
+//        }
+//
+//        $this->command->info("Baker $amanda->name has Sweepscakes");
+//        foreach ($amanda->sweepscakes as $sweepscake) {
+//            $this->command->info("$sweepscake21->name");
+//        }
     }
 
 
-    private static function createUsersFromUsernames(string $mappingStr, string $emailDomain): array
+    private function createUsersFromUserBakerMappings(string $mappingStr, string $emailDomain): array
     {
         $users = [];
         $mappings = explode(",", $mappingStr);
@@ -211,6 +218,8 @@ class DatabaseSeeder extends Seeder
             $slug = Str::slug(str_replace('.', '-', $username));
             $email = $username . '@' . $emailDomain;
             $password = Str::uuid();
+
+            $this->command->info("Creating user name: $name, email: $email, password: $password");
             $user = User::create(['name' => $name, 'username' => $slug, 'email' => $email, 'password' => bcrypt($password)]);
             $users[] = $user;
         }

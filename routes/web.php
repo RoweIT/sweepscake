@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BakerController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/bakers', [BakerController::class, 'index'])->name('bakers');
     Route::get('/bakers/{baker}', [BakerController::class, 'show'])->name('baker');
 });
