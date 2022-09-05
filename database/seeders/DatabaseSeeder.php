@@ -19,13 +19,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $adminPassword = Str::uuid();
+        $adminName = env('SEEDER_ADMIN_NAME', 'Admin');
+        $adminEmail = env('SEEDER_ADMIN_EMAIL', 'admin@example.org');
+        $adminPassword = env('SEEDER_ADMIN_PASSWORD', Str::uuid());
         $admin = User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
+            'name' => $adminName,
+            'email' => $adminEmail,
             'password' => bcrypt($adminPassword)
         ]);
-        $this->command->info("Created admin user with email: $admin->name and password $admin->password");
+        $this->command->info("Created admin user with email: $admin->name and password $adminPassword");
 
         $series21 = Series::create(['slug' => 'gbbo-series-12', 'name' => 'Great British Bake Off 2021 (series 12)',
             'start_on' => new Carbon('2021-09-21')]);

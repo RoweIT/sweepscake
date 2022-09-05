@@ -51,9 +51,9 @@ class BakerController extends Controller
      * @param Baker $baker
      * @return Response
      */
-    public function show(Baker $baker): Response
+    public function show(Baker $baker): View|Factory|Application
     {
-        return view('baker.show', [
+        return view('bakers.show', [
             'baker' => $baker
         ]);
     }

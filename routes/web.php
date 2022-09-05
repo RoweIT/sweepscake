@@ -25,4 +25,5 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
     Route::get('/bakers', [BakerController::class, 'index'])->name('bakers');
+    Route::get('/bakers/{baker}', [BakerController::class, 'show'])->name('baker');
 });

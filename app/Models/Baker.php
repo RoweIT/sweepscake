@@ -14,6 +14,14 @@ class Baker extends Model
     use HasFactory;
 
     /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    /**
      * Repository style function. Consider moving to a Repository class.
      *
      * Find all the bakers available for a given sweepscake

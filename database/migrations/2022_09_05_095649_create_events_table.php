@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Baker;
+use App\Models\Week;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
