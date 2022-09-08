@@ -30,7 +30,7 @@ class CreateNewUser implements CreatesNewUsers
 
         return User::create([
             'name' => $input['name'],
-            'username' => Str::slug($input['name']),
+            'username' => Str::slug(Str::uuid()),
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
