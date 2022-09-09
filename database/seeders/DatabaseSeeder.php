@@ -93,69 +93,27 @@ class DatabaseSeeder extends Seeder
         $syabira = Baker::create(['slug' => 'syabira-22', 'name' => 'Syabira', 'age' => 32, 'from' => 'London', 'job' => 'Cardiovascular Research Associate', 'image_path' => '2022/syabira.jpg', 'series_id' => $series22->id, 'bio' => "Syabira is a cardiovascular research associate from London and she was born in Malaysia. She comes from a huge family and now lives with her boyfriend Bradley. She started baking in 2017 and loves adding Malaysian twists to British bakes."]);
         $will = Baker::create(['slug' => 'will-22', 'name' => 'Will', 'age' => 45, 'from' => 'London', 'job' => 'Former Charity Director', 'image_path' => '2022/will.jpg', 'series_id' => $series22->id, 'bio' => "Will is a former charity director from London and he lives in London with his wife and three children. He has a passion for DIY and carpentry and utilises his hobbies in his baking. Loving the technical side of baking, he is a particular fan of using yeast."]);
 
-        $sweepscake21 = Sweepscake::create(['slug' => 'sweepscake-21', 'name' => 'Sweepscake 2021', 'series_id' => $series21->id]);
+        $emailDomain = env('SEEDER_USERS_EMAIL_DOMAIN', 'example.org');
 
         $this->command->info("");
         $this->command->info("Creating users for $series21->name");
         $this->command->info("------------------");
-        $emailDomain = env('SEEDER_USERS_EMAIL_DOMAIN', 'example.org');
+        $sweepscake21 = Sweepscake::create(['slug' => 'sweepscake-21', 'name' => 'Sweepscake 2021', 'series_id' => $series21->id]);
         $userBakerMappings21 = env('SEEDER_USERS_2021', 'tom,dick,harry');
-        $users21 = self::createUsersFromUserBakerMappings($userBakerMappings21, $emailDomain);
+        $users21 = self::createUsersFromUserBakerMappings($sweepscake21, $userBakerMappings21, $emailDomain);
+
+        $this->command->info("");
+        $this->command->info("Creating users for $series21->name");
+        $this->command->info("------------------");
+        $sweepscake22 = Sweepscake::create(['slug' => 'sweepscake-22', 'name' => 'Sweepscake 2022', 'series_id' => $series22->id]);
+        $userBakerMappings22 = env('SEEDER_USERS_2022', 'tom,dick,harry');
+        $users22 = self::createUsersFromUserBakerMappings($sweepscake22, $userBakerMappings22, $emailDomain);
 
         $this->command->info("");
         $this->command->info("All bakers for $series21->name");
         $this->command->info("----------------");
         foreach ($series21->bakers as $baker) {
             $this->command->info($baker->name);
-        }
-
-//        $this->command->info("");
-//        $this->command->info("All Bakers for $sweepscake21->name");
-//        $this->command->info("----------------");
-//        $bakers = Baker::findAllForSweepscake($sweepscake21->id);
-//        foreach ($bakers as $baker) {
-//            $this->command->info($baker->name);
-//        }
-
-        $this->command->info("");
-        $this->command->info("Allocated bakers for $sweepscake21->name");
-        $this->command->info("----------------");
-        foreach ($sweepscake21->bakers as $baker) {
-            $this->command->info($baker->name);
-        }
-
-//        $this->command->info("");
-//        $this->command->info("Bakers for $sweepscake21->name");
-//        $this->command->info("---------------");
-//        $bakers = $sweepscake21->findAllBakersForSeries();
-//        foreach ($bakers as $baker) {
-//            $this->command->info($baker->name);
-//        }
-
-        $mappings = explode(",", $userBakerMappings21);
-        foreach ($mappings as $mapping) {
-            $pair = explode(':', $mapping);
-            $username = trim($pair[0]);
-            $slug = Str::slug(trim(str_replace('.', '-', $username)));
-            $bakerSlug = trim($pair[1]);
-            $user = User::findByUsername($slug);
-            if (!$user) {
-                $this->command->error("Unable to find user $slug to add baker $bakerSlug to");
-                continue;
-            }
-            $baker = Baker::findBySlug($bakerSlug);
-            if (!$baker) {
-                $this->command->error("Unable to find bakers $bakerSlug to add to user $slug");
-                continue;
-            }
-
-            /*
-             * These three ways of creating the relationship between the tables all work - I guess use the one that
-             * makes the most sense.
-             */
-            // SweepscakeUserBaker::create(['sweepscake_id' => $sweepscake21->id, 'user_id' => $user->id, 'baker_id' => $baker->id]);
-            // $baker->sweepscakes()->attach($sweepscake21->id, ['user_id' => $user->id]);
-            $user->sweepscakes()->attach($sweepscake21->id, ['baker_id' => $baker->id]);
         }
 
         $this->command->info("");
@@ -172,58 +130,91 @@ class DatabaseSeeder extends Seeder
             $this->command->info($sub->user->name . ' => ' . $sub->baker->name);
         }
 
-        $sweepscake22 = Sweepscake::create(['slug' => 'sweepscake-22', 'name' => 'Sweepscake 2022', 'series_id' => $series22->id]);
-
         $this->command->info("");
-        $this->command->info("Bakers for $series22->name");
+        $this->command->info("All bakers for $series22->name");
         $this->command->info("----------------");
         foreach ($series22->bakers as $baker) {
             $this->command->info($baker->name);
         }
 
-        $paul = User::findByUsername('paul');
-        foreach ($paul->sweepscakes as $sweepscake) {
-            $this->command->info("$paul->name => $sweepscake->name");
+        $this->command->info("");
+        $this->command->info("Allocated bakers for $sweepscake22->name");
+        $this->command->info("----------------");
+        foreach ($sweepscake22->bakers as $baker) {
+            $this->command->info($baker->name);
         }
-//
-//        $sql = $sweepscake21->users()->toSql();
-//        var_dump($sql);
-//        $users = $sweepscake21->users;
-//        foreach ($users as $user) {
-//            $this->command->info("$sweepscake21->name => $user->name");
-//        }
-//
-//        $sql = $sweepscake21->bakers()->toSql();
-//        var_dump($sql);
-//        $bakers = $sweepscake21->bakers;
-//        foreach ($bakers as $baker) {
-//            $this->command->info("$sweepscake21->name => $baker->name");
-//        }
-//
-//        $this->command->info("Baker $amanda->name has Sweepscakes");
-//        foreach ($amanda->sweepscakes as $sweepscake) {
-//            $this->command->info("$sweepscake21->name");
-//        }
+
+        $this->command->info("");
+        $this->command->info("Sweepscake 2022 User/Baker");
+        $this->command->info("---------------");
+        foreach ($sweepscake22->sweepscakeUserBaker as $sub) {
+            $this->command->info($sub->user->name . ' => ' . $sub->baker->name);
+        }
     }
 
-
-    private function createUsersFromUserBakerMappings(string $mappingStr, string $emailDomain): array
+    private function createUsersFromUserBakerMappings(Sweepscake $sweepscake, string $userBakerMappings, string $emailDomain): array
     {
         $users = [];
-        $mappings = explode(",", $mappingStr);
+        $mappings = explode(",", $userBakerMappings);
         foreach ($mappings as $mapping) {
             $pair = explode(':', $mapping);
             $username = trim($pair[0]);
-            $name = ucwords(str_replace('.', ' ', $username));
+            $name = $this->generateName($username);
+
             $slug = Str::slug(str_replace('.', '-', $username));
             $email = $username . '@' . $emailDomain;
             $password = Str::uuid();
 
-            $this->command->info("Creating user name: $name, email: $email, password: $password");
-            $user = User::create(['name' => $name, 'username' => $slug, 'email' => $email, 'password' => bcrypt($password)]);
+            $user = User::findByUsername($slug);
+
+            if (!$user) {
+                $this->command->info("Creating user name: $name, email: $email, password: $password");
+                $user = User::create(['name' => $name, 'username' => $slug, 'email' => $email, 'password' => bcrypt($password)]);
+            } else {
+                $this->command->info("Using existing user record for user name: $name");
+            }
+
             $users[] = $user;
+
+            if (count($pair) < 2) {
+                $this->command->error("No baker specified for user $name");
+                continue;
+            }
+
+            $bakerSlug = trim($pair[1]);
+            $baker = Baker::findBySlug($bakerSlug);
+            if (!$baker) {
+                $this->command->error("Unable to find bakers $bakerSlug to add to user $slug");
+                continue;
+            }
+
+            /*
+             * These three ways of creating the relationship between the tables all work - I guess use the one that
+             * makes the most sense.
+             */
+            // SweepscakeUserBaker::create(['sweepscake_id' => $sweepscake21->id, 'user_id' => $user->id, 'baker_id' => $baker->id]);
+            // $baker->sweepscakes()->attach($sweepscake21->id, ['user_id' => $user->id]);
+            $user->sweepscakes()->attach($sweepscake->id, ['baker_id' => $baker->id]);
+
         }
 
         return $users;
     }
+
+    public function generateName(string $username) {
+
+        $name = ucwords(str_replace('.', ' ', trim($username)));
+
+        return $name;
+
+//        $separate = explode(" ", $name);
+//
+//        if (count($separate) == 1) {
+//            return $name;
+//        }
+//
+//        $last = array_pop($separate);
+//        return implode(' ', $separate)." ".$last[0];
+    }
+
 }
