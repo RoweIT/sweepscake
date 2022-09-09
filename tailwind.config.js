@@ -14,6 +14,9 @@ module.exports = {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
+            backgroundImage: {
+                'cake-background': "url('/images/cakes/pexels-abhinav-goswami-291528.jpg')",
+            }
         },
     },
 
