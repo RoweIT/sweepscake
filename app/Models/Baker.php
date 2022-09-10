@@ -63,6 +63,4 @@ class Baker extends Model
     {
         return $this->belongsToMany(Sweepscake::class, SweepscakeUserBaker::class);
     }
-
-
 }

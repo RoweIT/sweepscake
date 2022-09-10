@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BakerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SweepscakeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,4 +28,5 @@ Route::middleware([
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/bakers', [BakerController::class, 'index'])->name('bakers');
     Route::get('/bakers/{baker}', [BakerController::class, 'show'])->name('baker');
+    Route::get('/sweepscakes/{sweepscake}', [SweepscakeController::class, 'show'])->name('sweepscake');
 });

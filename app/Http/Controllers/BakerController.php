@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreBakerRequest;
-use App\Http\Requests\UpdateBakerRequest;
 use App\Models\Baker;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Response;
 
 class BakerController extends Controller
@@ -19,30 +18,15 @@ class BakerController extends Controller
      */
     public function index(): View|Factory|Application
     {
+        $series = "gbbo-series-13";
+
+        $bakers = Baker::whereHas('series', function (Builder $query) use ($series) {
+            $query->where('slug', '=', $series);
+        })->get();
+
         return view('bakers.index', [
-            'bakers' => Baker::paginate(50)
+            'bakers' => $bakers
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create(): Response
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param StoreBakerRequest $request
-     * @return Response
-     */
-    public function store(StoreBakerRequest $request): Response
-    {
-        //
     }
 
     /**
@@ -56,39 +40,5 @@ class BakerController extends Controller
         return view('bakers.show', [
             'baker' => $baker
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Baker $baker
-     * @return Response
-     */
-    public function edit(Baker $baker): Response
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param UpdateBakerRequest $request
-     * @param Baker $baker
-     * @return Response
-     */
-    public function update(UpdateBakerRequest $request, Baker $baker): Response
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Baker $baker
-     * @return Response
-     */
-    public function destroy(Baker $baker): Response
-    {
-        //
     }
 }

@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('slug')->unique();
             $table->string('name');
-            $table->date('start_on');
+            $table->date('start_on')->nullable(true);
+            $table->date('end_on')->nullable(true);
+            $table->string('status');
+            $table->string('image_path');
             $table->timestamps();
         });
     }

@@ -13,6 +13,14 @@ class Sweepscake extends Model
 {
     use HasFactory;
 
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     public function sweepscakeUserBaker(): HasMany
     {
         return $this->hasMany(SweepscakeUserBaker::class);
