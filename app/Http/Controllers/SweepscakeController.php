@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Series;
 use App\Models\Sweepscake;
+use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class SweepscakeController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -19,13 +27,19 @@ class SweepscakeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Sweepscake  $sweepscake
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @param Sweepscake $sweepscake
+     * @return Application|Factory|View
      */
     public function show(Sweepscake $sweepscake)
     {
+        /** @var User $user */
+        $user = Auth::user();
+
+        $bakers = $user->bakers()->where('sweepscake_user_bakers.sweepscake_id', '=', $sweepscake->id)->get();
+
         return view('sweepscakes.show', [
-            'sweepscake' => $sweepscake
+            'sweepscake' => $sweepscake,
+            'bakers' => $bakers
         ]);
     }
 }

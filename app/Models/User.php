@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -91,4 +92,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Sweepscake::class, SweepscakeUserBaker::class)->distinct();
     }
+
+    public function bakers(): HasManyThrough
+    {
+        return $this->hasManyThrough(Baker::class, SweepscakeUserBaker::class, 'user_id','id','id','baker_id');
+    }
+
 }

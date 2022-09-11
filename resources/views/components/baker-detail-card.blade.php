@@ -9,7 +9,7 @@
             <header class="mt-8 lg:mt-0">
                 <div class="mt-4">
                     <h1 class="text-3xl">
-                        <a href="/posts/{{ $baker->slug }}">
+                        <a href="/bakers/{{ $baker->slug }}">
                             {{ $baker->name }}
                         </a>
                     </h1>
