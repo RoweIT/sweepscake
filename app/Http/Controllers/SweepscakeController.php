@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Series;
 use App\Models\Sweepscake;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,11 +33,16 @@ class SweepscakeController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        $bakers = $user->bakers()->where('sweepscake_user_bakers.sweepscake_id', '=', $sweepscake->id)->get();
+        $bakers = $user->bakers()
+            ->where('sweepscake_user_bakers.sweepscake_id', '=', $sweepscake->id)
+            ->get();
+
+        $sweepscakeUserBakers = $sweepscake->sweepscakeUserBaker()->get();
 
         return view('sweepscakes.show', [
             'sweepscake' => $sweepscake,
-            'bakers' => $bakers
+            'bakers' => $bakers,
+            'sweepscakeUserBakers' => $sweepscakeUserBakers
         ]);
     }
 }
