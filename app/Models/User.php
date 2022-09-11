@@ -70,7 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * Find a User given a username
      * @param int $username the username to find
-     * @return User|null the USer recornd, or null if not found
+     * @return User|null the User record, or null if not found
      */
     public static function findByUsername(string $username): User|null
     {
