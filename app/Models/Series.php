@@ -14,6 +14,8 @@ class Series extends Model
 
     use HasFactory;
 
+    protected $guarded = [];
+
     public function bakers(): HasMany
     {
         return $this->hasMany(Baker::class);
@@ -28,4 +30,17 @@ class Series extends Model
     {
         return $this->hasMany(Sweepscake::class);
     }
+
+    /**
+     * Repository style function. Consider moving to a Repository class.
+     *
+     * Find a Series given a slug
+     * @param int $username the slug to find
+     * @return Series|null the Series record, or null if not found
+     */
+    public static function findBySlug(string $slug): Series|null
+    {
+        return self::where('slug', '=', $slug)->first();
+    }
+
 }

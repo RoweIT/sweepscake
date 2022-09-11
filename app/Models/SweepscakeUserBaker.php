@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class SweepscakeUserBaker extends Model
 {
+    protected $guarded = [];
 
     public static function findAllForSweepscake(int $sweepscakeId): Collection
     {

@@ -18,10 +18,9 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Week::class);
-            $table->foreignIdFor(Baker::class)->nullable(true);
+            $table->foreignIdFor(Baker::class);
             $table->string('type');
-            $table->string('label');
-            $table->string('notes');
+            $table->string('notes')->nullable(true);
             $table->timestamps();
         });
     }

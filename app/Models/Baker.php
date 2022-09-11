@@ -13,6 +13,8 @@ class Baker extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     /**
      * Get the route key for the model.
      */

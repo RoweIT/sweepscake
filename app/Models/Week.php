@@ -11,6 +11,8 @@ class Week extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function series(): BelongsTo
     {
         return $this->belongsTo(Series::class);
