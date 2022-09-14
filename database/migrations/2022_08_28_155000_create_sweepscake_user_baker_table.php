@@ -23,8 +23,8 @@ return new class extends Migration
             $table->foreignIdFor(Baker::class)->nullable(true);
             $table->timestamps();
 
-            // only one user can have a baker for a given sweepscake
-            $table->unique(['sweepscake_id', 'baker_id']);
+            // each row has to be unique
+            $table->unique(['sweepscake_id', 'user_id', 'baker_id']);
         });
     }
 

@@ -63,4 +63,17 @@ class Sweepscake extends Model
     {
         return $this->series->bakers;
     }
+
+    /**
+     * Repository style function. Consider moving to a Repository class.
+     *
+     * Find a Sweepscake given a slug
+     * @param int $username the slug to find
+     * @return Sweepscake|null the Seepscake record, or null if not found
+     */
+    public static function findBySlug(string $slug): Sweepscake|null
+    {
+        return self::where('slug', '=', $slug)->first();
+    }
+
 }

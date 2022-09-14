@@ -92,34 +92,30 @@ class DatabaseSeeder extends Seeder
         $mappings = explode(",", $userBakerMappings);
         foreach ($mappings as $mapping) {
             $pair = explode(':', $mapping);
-            $username = trim($pair[0]);
-            $name = $this->generateName($username);
+            $userInfo = trim($pair[0]);
+            $name = $this->generateName($userInfo);
 
-            $slug = Str::slug(str_replace('.', '-', $username));
-            $email = $username . '@' . $emailDomain;
+            $username = Str::slug(str_replace('.', '-', $userInfo));
+            $email = $userInfo . '@' . $emailDomain;
             $password = env('SEEDER_USER_PASSWORD', Str::uuid());
 
-            $user = User::findByUsername($slug);
+            $user = User::findByUsername($username);
 
             if (!$user) {
                 $this->command->info("Creating user name: $name, email: $email, password: $password");
-                $user = User::create(['name' => $name, 'username' => $slug, 'email' => $email, 'password' => bcrypt($password), 'email_verified_at' => $now]);
+                $user = User::create(['name' => $name, 'username' => $username, 'email' => $email, 'password' => bcrypt($password), 'email_verified_at' => $now]);
             } else {
                 $this->command->info("Using existing user record for user name: $name");
             }
 
             $users[] = $user;
 
-            if (count($pair) < 2) {
-                $this->command->error("No baker specified for user $name");
-                continue;
-            }
-
-            $bakerSlug = trim($pair[1]);
-            $baker = Baker::findBySlug($bakerSlug);
-            if (!$baker) {
-                $this->command->error("Unable to find bakers $bakerSlug to add to user $slug");
-                continue;
+            if (count($pair) >= 2) {
+                $bakerSlug = trim($pair[1]);
+                $baker = Baker::findBySlug($bakerSlug);
+                if (!$baker) {
+                    $this->command->error("Unable to find bakers $bakerSlug to add to user $username");
+                }
             }
 
             /*
@@ -128,7 +124,7 @@ class DatabaseSeeder extends Seeder
              */
             // SweepscakeUserBaker::create(['sweepscake_id' => $sweepscake21->id, 'user_id' => $user->id, 'baker_id' => $baker->id]);
             // $baker->sweepscakes()->attach($sweepscake21->id, ['user_id' => $user->id]);
-            $user->sweepscakes()->attach($sweepscake->id, ['baker_id' => $baker->id]);
+            $user->sweepscakes()->attach($sweepscake->id, ['baker_id' => $baker ?? $baker->id]);
 
         }
 
