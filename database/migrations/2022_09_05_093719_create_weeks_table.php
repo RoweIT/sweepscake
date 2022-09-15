@@ -23,8 +23,6 @@ return new class extends Migration
             $table->string('signature');
             $table->string('technical');
             $table->string('showstopper');
-            $table->foreignIdFor(Baker::class, 'star_baker')->nullable(true);
-            $table->foreignIdFor(Baker::class, 'eliminated')->nullable(true);
             $table->timestamps();
         });
     }
