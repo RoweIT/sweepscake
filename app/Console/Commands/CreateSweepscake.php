@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Models\Baker;
-use App\Models\Option;
 use App\Models\Series;
 use App\Models\Sweepscake;
 use App\Models\User;
@@ -20,9 +19,10 @@ class CreateSweepscake extends Command
      */
     protected $signature = 'sweepscake:create
                             {name : The Sweepscake name}
-                            {userBakerMappings* : The user baker mappings specified as user email name:baker slug}
-                            {--slug? : The Sweepscake slug}
+                            {--slug : The Sweepscake slug}
                             {--series=gbbo-series-13 : The series to create the Sweepscake for}
+                            {--user-baker-mapping* : The user baker mappings specified as user email name:baker slug}
+                            {--user-baker-mappings : The user baker mappings specified as user email name:baker slug as a comma separated list}
                             {--email-domain=example.com : The email domain to use to apply to the user email name in the mappings}
                             ';
 
@@ -31,7 +31,7 @@ class CreateSweepscake extends Command
      *
      * @var string
      */
-    protected $description = 'Creates a sweepscake';
+    protected $description = 'Creates a Sweepscake';
 
     /**
      * Execute the console command.
@@ -44,7 +44,13 @@ class CreateSweepscake extends Command
         $series = Series::findBySlug($seriesSlug);
 
         $sweepscakeName = $this->argument('name');
-        $userBakerMappings = $this->argument('userBakerMappings');
+        $userBakerMappings = [];
+        if ($this->hasOption('user-baker-mapping')) {
+            $userBakerMappings = $this->option('user-baker-mapping');
+        }
+        if ($this->hasOption('user-baker-mappings')) {
+            $userBakerMappings = array_merge($userBakerMappings, explode(",", $this->option('user-baker-mappings')));
+        }
 
         $sweepscakeSlug = null;
         if ($this->hasOption('slug')) {
@@ -83,7 +89,7 @@ class CreateSweepscake extends Command
         return 0;
     }
 
-    private function createUsersFromUserBakerMappings(Sweepscake $sweepscake, array $mappings, string $emailDomain): array
+    private function createUsersFromUserBakerMappings(Sweepscake $sweepscake, string|array $mappings, string $emailDomain): array
     {
         $now = Carbon::now();
 
