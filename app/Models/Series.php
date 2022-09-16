@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Series extends Model
 {
@@ -29,6 +30,11 @@ class Series extends Model
     public function sweepscakes(): HasMany
     {
         return $this->hasMany(Sweepscake::class);
+    }
+
+    public function events(): HasManyThrough
+    {
+        return $this->hasManyThrough(Event::class, Week::class);
     }
 
     /**

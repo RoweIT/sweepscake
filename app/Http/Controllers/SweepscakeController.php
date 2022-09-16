@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BakerScorecard;
 use App\Models\Sweepscake;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
@@ -39,10 +40,27 @@ class SweepscakeController extends Controller
 
         $sweepscakeUserBakers = $sweepscake->sweepscakeUserBaker()->get();
 
+        // find the vents for this Sweepscake
+        $events = $sweepscake->series->events()->get();
+
+        // and score the events
+        $scorecards = BakerScorecard::calculateFromEvents($events);
+
+        $bakerUserScorecards = $sweepscakeUserBakers->map(function ($sub) use ($scorecards) {
+            return ['baker' => $sub->baker, 'user' => $sub->user, 'scorecard' => $scorecards->get($sub->baker->id) ];
+        });
+
+        $bakerUserScorecards = $bakerUserScorecards->sortByDesc(function ($bus, $key) {
+            return (int)$bus['scorecard']?->getScore();
+        });
+
+
         return view('sweepscakes.show', [
             'sweepscake' => $sweepscake,
             'bakers' => $bakers,
-            'sweepscakeUserBakers' => $sweepscakeUserBakers
+            'sweepscakeUserBakers' => $sweepscakeUserBakers,
+            'scorecards' => $scorecards,
+            'bakerUserScorecards' => $bakerUserScorecards
         ]);
     }
 }

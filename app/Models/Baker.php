@@ -65,4 +65,10 @@ class Baker extends Model
     {
         return $this->belongsToMany(Sweepscake::class, SweepscakeUserBaker::class);
     }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
+    }
+
 }
