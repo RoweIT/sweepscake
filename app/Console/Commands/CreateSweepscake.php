@@ -19,10 +19,11 @@ class CreateSweepscake extends Command
      */
     protected $signature = 'sweepscake:create
                             {name : The Sweepscake name}
+                            {series : The series to create the Sweepscake for}
                             {--slug : The Sweepscake slug}
-                            {--series=gbbo-series-13 : The series to create the Sweepscake for}
                             {--user-baker-mapping* : The user baker mappings specified as user email name:baker slug}
                             {--user-baker-mappings : The user baker mappings specified as user email name:baker slug as a comma separated list}
+                            {--user-password : The password to use for any users created}
                             {--email-domain=example.com : The email domain to use to apply to the user email name in the mappings}
                             ';
 
@@ -40,7 +41,7 @@ class CreateSweepscake extends Command
      */
     public function handle()
     {
-        $seriesSlug = $this->option('series');
+        $seriesSlug = $this->argument('series');
         $series = Series::findBySlug($seriesSlug);
 
         $sweepscakeName = $this->argument('name');
@@ -50,6 +51,12 @@ class CreateSweepscake extends Command
         }
         if ($this->hasOption('user-baker-mappings')) {
             $userBakerMappings = array_merge($userBakerMappings, explode(",", $this->option('user-baker-mappings')));
+        }
+        $password = '';
+        if ($this->hasOption('user-password')) {
+            $password = $this->option('user-password');
+        } else {
+            $password = Str::uuid();
         }
 
         $sweepscakeSlug = null;
@@ -69,7 +76,9 @@ class CreateSweepscake extends Command
             $this->info("Updating existing sweepscake: $sweepscake");
         }
 
-        $users = self::createUsersFromUserBakerMappings($sweepscake, $userBakerMappings, $emailDomain);
+
+
+        $users = self::createUsersFromUserBakerMappings($sweepscake, $userBakerMappings, $emailDomain, $password);
 
         $this->info("Allocated bakers for $sweepscake->name");
         $this->table(
@@ -89,7 +98,7 @@ class CreateSweepscake extends Command
         return 0;
     }
 
-    private function createUsersFromUserBakerMappings(Sweepscake $sweepscake, string|array $mappings, string $emailDomain): array
+    private function createUsersFromUserBakerMappings(Sweepscake $sweepscake, string|array $mappings, string $emailDomain, $password): array
     {
         $now = Carbon::now();
 
@@ -101,7 +110,6 @@ class CreateSweepscake extends Command
 
             $username = Str::slug(str_replace('.', '-', $userInfo));
             $email = $userInfo . '@' . $emailDomain;
-            $password = env('SEEDER_USER_PASSWORD', Str::uuid());
 
             $user = User::findByUsername($username);
             if (!$user) {

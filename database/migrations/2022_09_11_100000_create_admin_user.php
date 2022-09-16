@@ -29,7 +29,7 @@ return new class extends Migration {
             $role = Role::findByName(Roles::ADMINISTRATOR);
             $role->users()->attach($admin);
             // does not work from a Migration
-            // $this->command->info("Created admin Admin user, name: $admin->name, email: $admin->email and password: $adminPassword");
+            // $this->info("Created admin Admin user, name: $admin->name, email: $admin->email and password: $adminPassword");
         }
     }
 
