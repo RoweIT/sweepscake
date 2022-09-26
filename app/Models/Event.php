@@ -12,12 +12,12 @@ class Event extends Model
     use HasFactory;
 
     public const TYPE_STAR_BAKER = 'star-baker';
-    public const TECHNICAL_FIRST = 'technical-first';
-    public const TECHNICAL_SECOND = 'technical-second';
-    public const TECHNICAL_THIRD = 'technical-third';
-    public const TECHNICAL_LAST = 'technical-last';
-    public const ELIMINATED = 'eliminated';
-    public const HANDSHAKES = 'handshakes';
+    public const TYPE_TECHNICAL_FIRST = 'technical-first';
+    public const TYPE_TECHNICAL_SECOND = 'technical-second';
+    public const TYPE_TECHNICAL_THIRD = 'technical-third';
+    public const TYPE_TECHNICAL_LAST = 'technical-last';
+    public const TYPE_ELIMINATED = 'eliminated';
+    public const TYPE_HANDSHAKE = 'handshake';
 
     protected $guarded = [];
 

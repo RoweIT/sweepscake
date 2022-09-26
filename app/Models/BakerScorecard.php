@@ -200,22 +200,22 @@ class BakerScorecard
                 case  Event::TYPE_STAR_BAKER:
                     $scorecard->incrementStarBakers();
                     break;
-                case  Event::TECHNICAL_FIRST:
+                case  Event::TYPE_TECHNICAL_FIRST:
                     $scorecard->incrementTechnicalFirsts();
                     break;
-                case  Event::TECHNICAL_SECOND:
+                case  Event::TYPE_TECHNICAL_SECOND:
                     $scorecard->incrementTechnicalSeconds();
                     break;
-                case  Event::TECHNICAL_THIRD:
+                case  Event::TYPE_TECHNICAL_THIRD:
                     $scorecard->incrementTechnicalThirds();
                     break;
-                case  Event::TECHNICAL_LAST:
+                case  Event::TYPE_TECHNICAL_LAST:
                     $scorecard->incrementTechnicalLasts();
                     break;
-                case  Event::ELIMINATED:
+                case  Event::TYPE_ELIMINATED:
                     $scorecard->setEliminated(true);
                     break;
-                case  Event::HANDSHAKES:
+                case  Event::TYPE_HANDSHAKE:
                     $scorecard->incrementHandshakes();
                     break;
             }
