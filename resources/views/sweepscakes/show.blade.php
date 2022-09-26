@@ -29,7 +29,7 @@
                 @endif
             </div>
 
-            <h2 class="text-xl mt-4">Everone's Bakers</h2>
+            <h2 class="text-xl mt-4">Everyone's Bakers</h2>
 
             <div class="overflow-x-auto relative">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
