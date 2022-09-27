@@ -9,12 +9,17 @@ on:
       - main
   workflow_dispatch:
 
+
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Code
+        uses: actions/checkout@v2 
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -31,24 +36,22 @@ jobs:
         if: steps.check_files.outputs.files_exists == 'true'
         run: composer validate --no-check-publish && composer install --prefer-dist --no-progress
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+      - name: Login to Azure
+        uses: Azure/login@v1
         with:
-          name: php-app
-          path: .
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
+      - name: Get SSL certificate from Key Vault for MySQL connection
+        uses: Azure/get-keyvault-secrets@v1
         with:
-          name: php-app
+          keyvault: "sweepscake-key-vault" 
+          secrets: "sweepstake-db-ssl-cert"
+        id: getSecretsAction
+
+      - name: Copy SSL certificate to expected location
+        run: |
+          mkdir ssl
+          echo "${{ steps.getSecretsAction.outputs.sweepstake-db-ssl-cert }}" > ssl/DigiCertGlobalRootCA.crt.pem
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
