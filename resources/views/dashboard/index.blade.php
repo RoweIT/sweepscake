@@ -12,7 +12,7 @@
                 <div class="mt-4 py-4 px-4">
                     Your current Sweepscakes
                 </div>
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white overflow-hidden sm:rounded-lg">
                     @if ($current_sweepscakes->count() == 0)
                         <p>You have no current Sweepscakes</p>
                     @else
@@ -26,7 +26,7 @@
                     <div class="mt-4 py-4 px-4">
                         Your previous Sweepscakes
                     </div>
-                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <div class="bg-white overflow-hidden sm:rounded-lg">
                         @if ($previous_sweepscakes->count() == 0)
                             <p>You have no previous Sweepscakes</p>
                         @else

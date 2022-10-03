@@ -24,7 +24,7 @@
 
 <div class="w-full h-screen bg-cake-background bg-cover bg-center">
     <div class="w-full h-full flex flex-col justify-center items-center ">
-        <h1 class="mt-5 text-center text-4xl text-white font-semibold drop-shadow-lg"><span class="text-yellow-300">Sweepscake 2022</span></h1>
+        <h1 class="mt-5 text-center text-4xl text-white font-semibold"><span class="text-yellow-300">Sweepscake 2022</span></h1>
 
         @if (Route::has('login'))
             @auth
