@@ -11,13 +11,13 @@
 
             <h2 class="text-xl mt-4">The Sweepscake</h2>
 
-            <div class="mt-4 bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="mt-4 bg-white overflow-hidden sm:rounded-lg">
                 <x-sweepscake-detail-card :sweepscake="$sweepscake"/>
             </div>
 
             <h2 class="text-xl mt-4">Your Bakers</h2>
 
-            <div class=" mt-4 bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="mt-4 bg-white overflow-hidden sm:rounded-lg">
                 @if ($bakers->count())
                     <div class="lg:grid lg:grid-cols-2">
                         @foreach ($bakers as $baker)
@@ -29,26 +29,29 @@
                 @endif
             </div>
 
-            <h2 class="text-xl mt-4">Everyone's Bakers</h2>
+            <h2 class="text-xl mt-4">Scorecard</h2>
 
-            <div class="overflow-x-auto relative">
+            <div class="mt-4 overflow-x-auto relative">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="py-3 px-6">
-                            User
-                        </th>
-                        <th scope="col" class="py-3 px-6">
                             Baker
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            Age
+                            User
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            Job
+                            handshake
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            from
+                            technical 1/2/3
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            technical last
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            star baker
                         </th>
                         <th scope="col" class="py-3 px-6">
                             score
@@ -63,22 +66,25 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row"
                                 class="py-4 px-6 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $bus['user']->name }}
+                                {{ $bus['baker']->name }}
                             </th>
                             <td class="py-4 px-6">
-                                {{ $bus['baker']->name }}
+                                {{ $bus['user']->name }}
                             </td>
                             <td class="py-4 px-6">
-                                {{ $bus['baker']->age }}
+                                {{ $bus['scorecard']?->getHandshakes() ?? 0}}
                             </td>
                             <td class="py-4 px-6">
-                                {{ $bus['baker']->job }}
+                                {{ $bus['scorecard']?->getTechnicalFirsts() ?? 0}} / {{ $bus['scorecard']?->getTechnicalSeconds() ?? 0}} / {{ $bus['scorecard']?->getTechnicalThirds() ?? 0}}
                             </td>
                             <td class="py-4 px-6">
-                                {{ $bus['baker']->from }}
+                                {{ $bus['scorecard']?->getTechnicalLasts() ?? 0}}
                             </td>
                             <td class="py-4 px-6">
-                                {{ $bus['scorecard']?->getScore() ?? '0' }}
+                                {{ $bus['scorecard']?->getStarBakers() ?? 0}}
+                            </td>
+                            <td class="py-4 px-6">
+                                {{ $bus['scorecard']?->getScore() ?? 0}}
                             </td>
                             <td class="py-4 px-6">
                                 {{ $bus['scorecard']?->isEliminated() ? 'Y' : '' }}
