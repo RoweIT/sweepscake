@@ -16,6 +16,7 @@ class Scorecard
     private bool $raisingAgent = false;
     private bool $eliminated = false;
 
+    private int $raisingAgentScore = 0;
     private int $score = 0;
 
     public function __construct()
@@ -142,6 +143,7 @@ class Scorecard
             if ($scorecard->eliminated) {
                 $aggregate->eliminated = true;
             }
+            $aggregate->raisingAgentScore += $scorecard->raisingAgentScore;
             $aggregate->score += $scorecard->score;
         }
         return $aggregate;
@@ -149,23 +151,26 @@ class Scorecard
 
     public function calculateScore(): void
     {
-        $this->score = ($this->starBakers * 5
-                + $this->technicalFirsts * 3
-                + $this->technicalSeconds * 2
-                + $this->technicalThirds
-                + $this->technicalLasts * -2
-                + $this->handshakes * 7) * ($this->raisingAgent ? 2 : 1);
+        $score = ($this->starBakers * 5
+            + $this->technicalFirsts * 3
+            + $this->technicalSeconds * 2
+            + $this->technicalThirds
+            + $this->technicalLasts * -2
+            + $this->handshakes * 7);
+        if ($this->raisingAgent) {
+            $this->raisingAgentScore = $score;
+        }
+        $this->score = $score + $this->raisingAgentScore;
+    }
+
+    public function getRaisingAgentScore(): int
+    {
+        return $this->raisingAgentScore;
     }
 
     public function getScore(): int
     {
         return $this->score;
-    }
-
-    public function setScore(int $score): Scorecard
-    {
-        $this->score = $score;
-        return $this;
     }
 
     /**

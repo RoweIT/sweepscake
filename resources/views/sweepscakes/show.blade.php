@@ -57,6 +57,9 @@
                             RA played?
                         </th>
                         <th scope="col" class="py-3 px-6">
+                            RA score
+                        </th>
+                        <th scope="col" class="py-3 px-6">
                             score
                         </th>
                         <th scope="col" class="py-3 px-6">
@@ -88,6 +91,9 @@
                             </td>
                             <td class="py-4 px-6">
                                 {{ $bus['scorecard']?->isRaisingAgent() ? 'Y' : '' }}
+                            </td>
+                            <td class="py-4 px-6">
+                                {{ $bus['scorecard']?->isRaisingAgent() ? $bus['scorecard']?->getRaisingAgentScore() : '' }}
                             </td>
                             <td class="py-4 px-6">
                                 {{ $bus['scorecard']?->getScore() ?? 0}}
