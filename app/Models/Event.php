@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Event extends Model
 {
@@ -22,7 +21,7 @@ class Event extends Model
 
     protected $guarded = [];
 
-    public function series(): BelongsTo
+    public function week(): BelongsTo
     {
         return $this->belongsTo(Week::class);
     }
@@ -31,4 +30,16 @@ class Event extends Model
     {
         return $this->belongsTo(Baker::class);
     }
+
+    public function sweepscake(): BelongsTo
+    {
+        return $this->belongsTo(Sweepscake::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+
 }

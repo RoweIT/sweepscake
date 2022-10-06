@@ -41,7 +41,7 @@ class SweepscakeController extends Controller
         $sweepscakeUserBakers = $sweepscake->sweepscakeUserBaker()->get();
 
         // find the events for this Sweepscake
-        $events = $sweepscake->series->events()->get();
+        $events = $sweepscake->series->events()->whereNull('sweepscake_id')->orWhere('sweepscake_id', '=', $sweepscake->id)->get();
 
         // and score the events
         $scorecards = Scorecard::calculateFromEvents($events);
