@@ -8,6 +8,7 @@ use App\Models\Sweepscake;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Str;
 
 class CreateSweepscake extends Command
@@ -20,10 +21,10 @@ class CreateSweepscake extends Command
     protected $signature = 'sweepscake:create
                             {name : The Sweepscake name}
                             {series : The series to create the Sweepscake for}
-                            {--slug : The Sweepscake slug}
+                            {--slug= : The Sweepscake slug}
                             {--user-baker-mapping* : The user baker mappings specified as user email name:baker slug}
-                            {--user-baker-mappings : The user baker mappings specified as user email name:baker slug as a comma separated list}
-                            {--user-password : The password to use for any users created}
+                            {--user-baker-mappings= : The user baker mappings specified as user email name:baker slug as a comma separated list}
+                            {--user-password= : The password to use for any users created}
                             {--email-domain=example.com : The email domain to use to apply to the user email name in the mappings}
                             ';
 
@@ -107,16 +108,21 @@ class CreateSweepscake extends Command
             $pair = explode(':', $mapping);
             $userInfo = trim($pair[0]);
             $name = $this->generateName($userInfo);
-
-            $username = Str::slug(str_replace('.', '-', $userInfo));
+            $username = $this->generateUsername($userInfo);
             $email = $userInfo . '@' . $emailDomain;
 
-            $user = User::findByUsername($username);
+            $user = User::findByEmail($email);
             if (!$user) {
-                $user = User::create(['name' => $name, 'username' => $username, 'email' => $email, 'password' => bcrypt($password), 'email_verified_at' => $now]);
+                $user = User::create(['name' => $name, 'username' => $username, 'email' => $email, 'password' => bcrypt($password)]);
+                // email_verified_at not fillable so set explicitly
+                $user->email_verified_at = $now;
+                $user->save();
                 $this->info("Created user name: $name, email: $email, password: $password");
             } else {
-                $this->info("Using existing user record for user: $username");
+                $user->username = $username;
+                $user->email_verified_at = $now;
+                $user->save();
+                $this->info("Updating existing user record for user: $username");
             }
 
             $users[] = $user;
@@ -134,28 +140,36 @@ class CreateSweepscake extends Command
              * These three ways of creating the relationship between the tables all work - I guess use the one that
              * makes the most sense.
              */
-            // SweepscakeUserBaker::create(['sweepscake_id' => $sweepscake21->id, 'user_id' => $user->id, 'baker_id' => $baker->id]);
-            // $baker->sweepscakes()->attach($sweepscake21->id, ['user_id' => $user->id]);
-            $user->sweepscakes()->attach($sweepscake->id, ['baker_id' => $baker->id ?? null]);
+            try {
+                // SweepscakeUserBaker::create(['sweepscake_id' => $sweepscake21->id, 'user_id' => $user->id, 'baker_id' => $baker->id]);
+                // $baker->sweepscakes()->attach($sweepscake21->id, ['user_id' => $user->id]);
+                $user->sweepscakes()->attach($sweepscake->id, ['baker_id' => $baker->id ?? null]);
+            } catch (QueryException $e) {
+                $this->warn("Unable to add mapping for sweepscake: $sweepscake->id, user: $user->id, baker $baker->id; ignoring");
+            }
 
         }
 
         return $users;
     }
 
-    public function generateName(string $username)
+    public function generateName(string $userInfo)
     {
-        $name = ucwords(str_replace('.', ' ', trim($username)));
+        $name = ucwords(str_replace('.', ' ', trim($userInfo)));
         return $name;
-
-        // $separate = explode(" ", $name);
-        //
-        // if (count($separate) == 1) {
-        //     return $name;
-        // }
-        //
-        // $last = array_pop($separate);
-        // return implode(' ', $separate)." ".$last[0];
     }
 
+    public function generateUsername(string $userInfo)
+    {
+        $name = strtolower(str_replace('.', ' ', trim($userInfo)));
+
+         $separate = explode(" ", $name);
+
+         if (count($separate) == 1) {
+             return $name;
+         }
+
+         $last = array_pop($separate);
+         return implode(' ', $separate).$last[0];
+    }
 }

@@ -78,6 +78,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return self::where('username', '=', $username)->first();
     }
 
+    public static function findByEmail(string $email): User|null
+    {
+        return self::where('email', '=', $email)->first();
+    }
+
     public function sweepscakeUserBaker(): HasMany
     {
         return $this->hasMany(SweepscakeUserBaker::class);

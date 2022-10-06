@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Collection;
 
-class BakerScorecard
+class Scorecard
 {
     private int $handshakes = 0;
     private int $starBakers = 0;
@@ -28,9 +28,9 @@ class BakerScorecard
 
     /**
      * @param int $handshakes
-     * @return BakerScorecard
+     * @return Scorecard
      */
-    public function setHandshakes(int $handshakes): BakerScorecard
+    public function setHandshakes(int $handshakes): Scorecard
     {
         $this->handshakes = $handshakes;
         return $this;
@@ -51,9 +51,9 @@ class BakerScorecard
 
     /**
      * @param int $starBakers
-     * @return BakerScorecard
+     * @return Scorecard
      */
-    public function setStarBakers(int $starBakers): BakerScorecard
+    public function setStarBakers(int $starBakers): Scorecard
     {
         $this->starBakers = $starBakers;
         return $this;
@@ -74,9 +74,9 @@ class BakerScorecard
 
     /**
      * @param int $technicalFirsts
-     * @return BakerScorecard
+     * @return Scorecard
      */
-    public function setTechnicalFirsts(int $technicalFirsts): BakerScorecard
+    public function setTechnicalFirsts(int $technicalFirsts): Scorecard
     {
         $this->technicalFirsts = $technicalFirsts;
         return $this;
@@ -97,9 +97,9 @@ class BakerScorecard
 
     /**
      * @param int $technicalSeconds
-     * @return BakerScorecard
+     * @return Scorecard
      */
-    public function setTechnicalSeconds(int $technicalSeconds): BakerScorecard
+    public function setTechnicalSeconds(int $technicalSeconds): Scorecard
     {
         $this->technicalSeconds = $technicalSeconds;
         return $this;
@@ -122,7 +122,7 @@ class BakerScorecard
      * @param int $technicalThirds
      * @return Baker
      */
-    public function setTechnicalThirds(int $technicalThirds): BakerScorecard
+    public function setTechnicalThirds(int $technicalThirds): Scorecard
     {
         $this->technicalThirds = $technicalThirds;
         return $this;
@@ -143,9 +143,9 @@ class BakerScorecard
 
     /**
      * @param int $technicalLasts
-     * @return BakerScorecard
+     * @return Scorecard
      */
-    public function setTechnicalLasts(int $technicalLasts): BakerScorecard
+    public function setTechnicalLasts(int $technicalLasts): Scorecard
     {
         $this->technicalLasts = $technicalLasts;
         return $this;
@@ -166,9 +166,9 @@ class BakerScorecard
 
     /**
      * @param bool $eliminated
-     * @return BakerScorecard
+     * @return Scorecard
      */
-    public function setEliminated(bool $eliminated): BakerScorecard
+    public function setEliminated(bool $eliminated): Scorecard
     {
         $this->eliminated = $eliminated;
         return $this;
@@ -192,7 +192,7 @@ class BakerScorecard
 
             $scorecard = $scorecards->get($event->baker->id);
             if (!$scorecard) {
-                $scorecard = new BakerScorecard($event->baker);
+                $scorecard = new Scorecard($event->baker);
                 $scorecards->put($event->baker->id, $scorecard);
             }
 

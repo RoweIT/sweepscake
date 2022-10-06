@@ -18,6 +18,7 @@ class Event extends Model
     public const TYPE_TECHNICAL_LAST = 'technical-last';
     public const TYPE_ELIMINATED = 'eliminated';
     public const TYPE_HANDSHAKE = 'handshake';
+    public const TYPE_RAISING_AGENT = 'raising-agent';
 
     protected $guarded = [];
 
