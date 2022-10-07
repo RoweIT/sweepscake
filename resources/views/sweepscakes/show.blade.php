@@ -18,12 +18,10 @@
             <h2 class="text-xl mt-4">Your Bakers</h2>
 
             <div class="mt-4 bg-white overflow-hidden sm:rounded-lg">
-                @if ($bakers->count())
-                    <div class="lg:grid lg:grid-cols-2">
-                        @foreach ($bakers as $baker)
-                            <x-baker-detail-card :baker="$baker"/>
+                @if ($bakerScorecards->count())
+                        @foreach ($bakerScorecards as $bs)
+                            <x-baker-detail-card :baker="$bs['baker']" :scorecard="$bs['scorecard']"/>
                         @endforeach
-                    </div>
                 @else
                     <p class="text-center">You have no bakers for this sweepscake.</p>
                 @endif

@@ -54,10 +54,13 @@ class SweepscakeController extends Controller
             return (int)$bus['scorecard']?->getScore();
         });
 
+        $bakerScorecards = $bakerUserScorecards->filter(function ($bus) use ($user) {
+            return $bus['user']->id == $user->id;
+        });
 
         return view('sweepscakes.show', [
             'sweepscake' => $sweepscake,
-            'bakers' => $bakers,
+            'bakerScorecards' => $bakerScorecards,
             'sweepscakeUserBakers' => $sweepscakeUserBakers,
             'scorecards' => $scorecards,
             'bakerUserScorecards' => $bakerUserScorecards
