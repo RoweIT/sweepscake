@@ -13,7 +13,7 @@ class Scorecard
     private int $technicalSeconds = 0;
     private int $technicalThirds = 0;
     private int $technicalLasts = 0;
-    private bool $raisingAgent = false;
+    private Week|null $raisingAgentWeek = null;
     private bool $eliminated = false;
 
     private int $raisingAgentScore = 0;
@@ -65,8 +65,8 @@ class Scorecard
                     $scorecard->incrementHandshakes();
                     break;
                 case Event::TYPE_RAISING_AGENT:
-                    $scorecard->setRaisingAgent(true);
-                    Log::debug("Setting raising agent for $event->id " . $event->user->username . " for week " . $event->week->week_num);
+                    $scorecard->setRaisingAgentWeek($event->week);
+                    Log::debug("Setting raising agent for $event->id " . $event->user->username . " for week " . $event->week->week_num . " to ". $scorecard->getRaisingAgentWeek());
                     break;
             }
         }
@@ -113,18 +113,23 @@ class Scorecard
     }
 
     /**
-     * @param bool $raisingAgent
+     * @param Week $raisingAgentWeek
      * @return Scorecard
      */
-    public function setRaisingAgent(bool $raisingAgent): Scorecard
+    public function setRaisingAgentWeek(Week $raisingAgentWeek): Scorecard
     {
-        $this->raisingAgent = $raisingAgent;
+        $this->raisingAgentWeek = $raisingAgentWeek;
         return $this;
+    }
+
+    public function getRaisingAgentWeek(): Week|null
+    {
+        return $this->raisingAgentWeek;
     }
 
     public function isRaisingAgent(): bool
     {
-        return $this->raisingAgent;
+        return $this->raisingAgentWeek != null;
     }
 
     public static function aggregate(\Illuminate\Support\Collection $scorecards): Scorecard
@@ -137,8 +142,8 @@ class Scorecard
             $aggregate->technicalSeconds += $scorecard->technicalSeconds;
             $aggregate->technicalThirds += $scorecard->technicalThirds;
             $aggregate->technicalLasts += $scorecard->technicalLasts;
-            if ($scorecard->raisingAgent) {
-                $aggregate->raisingAgent = true;
+            if ($scorecard->raisingAgentWeek != null) {
+                $aggregate->raisingAgentWeek = $scorecard->raisingAgentWeek;
             }
             if ($scorecard->eliminated) {
                 $aggregate->eliminated = true;
@@ -157,7 +162,7 @@ class Scorecard
             + $this->technicalThirds
             + $this->technicalLasts * -2
             + $this->handshakes * 7);
-        if ($this->raisingAgent) {
+        if ($this->raisingAgentWeek != null) {
             $this->raisingAgentScore = $score;
         }
         $this->score = $score + $this->raisingAgentScore;

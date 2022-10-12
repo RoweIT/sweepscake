@@ -32,7 +32,7 @@
             <div class="mt-4 overflow-x-auto relative">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
+                    <tr class = "border-y border-x">
                         <th scope="col" class="py-3 px-6">
                             Baker
                         </th>
@@ -43,16 +43,16 @@
                             handshake
                         </th>
                         <th scope="col" class="py-3 px-6">
+                            star baker
+                        </th>
+                        <th scope="col" class="py-3 px-6">
                             technical 1/2/3
                         </th>
                         <th scope="col" class="py-3 px-6">
                             technical last
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            star baker
-                        </th>
-                        <th scope="col" class="py-3 px-6">
-                            RA played?
+                            RA played wk
                         </th>
                         <th scope="col" class="py-3 px-6">
                             RA score
@@ -67,16 +67,19 @@
                     </thead>
                     <tbody>
                     @foreach ($bakerUserScorecards as $bus)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <tr class="{{ $bus['scorecard']?->isEliminated() ? 'bg-gray-100' : 'bg-white'  }} border-b border-x dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row"
                                 class="py-4 px-6 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $bus['baker']->name }}
                             </th>
-                            <td class="py-4 px-6">
+                            <td class="py-4 px-6" x-username="{{ $bus['user']->username }}">
                                 {{ $bus['user']->name }}
                             </td>
                             <td class="py-4 px-6">
                                 {{ $bus['scorecard']?->getHandshakes() ?? 0}}
+                            </td>
+                            <td class="py-4 px-6">
+                                {{ $bus['scorecard']?->getStarBakers() ?? 0}}
                             </td>
                             <td class="py-4 px-6">
                                 {{ $bus['scorecard']?->getTechnicalFirsts() ?? 0}} / {{ $bus['scorecard']?->getTechnicalSeconds() ?? 0}} / {{ $bus['scorecard']?->getTechnicalThirds() ?? 0}}
@@ -85,10 +88,7 @@
                                 {{ $bus['scorecard']?->getTechnicalLasts() ?? 0}}
                             </td>
                             <td class="py-4 px-6">
-                                {{ $bus['scorecard']?->getStarBakers() ?? 0}}
-                            </td>
-                            <td class="py-4 px-6">
-                                {{ $bus['scorecard']?->isRaisingAgent() ? 'Y' : '' }}
+                                {{ $bus['scorecard']?->isRaisingAgent() ? ($bus['scorecard']?->getRaisingAgentWeek()->week_num) : '' }}
                             </td>
                             <td class="py-4 px-6">
                                 {{ $bus['scorecard']?->isRaisingAgent() ? $bus['scorecard']?->getRaisingAgentScore() : '' }}
