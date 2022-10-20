@@ -1,18 +1,11 @@
 <?php
 
-use App\Constants\Roles;
 use App\Models\Baker;
-use App\Models\Event;
-use App\Models\Series;
 use App\Models\Sweepscake;
 use App\Models\User;
-use App\Models\Week;
-use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
 
 return new class extends Migration {
     /**
