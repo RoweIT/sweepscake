@@ -14,13 +14,13 @@ return new class extends Migration {
      */
     public function up()
     {
-        $sweepscake13_2 = Sweepscake::findBySlug('sweepscake-13-2');
-        $series = $sweepscake13_2->series()->first();
+        $sweepscake13_1 = Sweepscake::findBySlug('sweepscake-13-1');
+        $series = $sweepscake13_1->series()->first();
         $week9 = $series->weeks()->where(['week_num' => 9])->first();
 
         $sandro = Baker::findBySlug('janusz-13');
         $peters = User::findByUsername('peters');
-        Event::create(['week_id' => $week9->id, 'baker_id' => $sandro->id, 'sweepscake_id' => $sweepscake13_2->id, 'user_id' => $peters->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
+        Event::create(['week_id' => $week9->id, 'baker_id' => $sandro->id, 'sweepscake_id' => $sweepscake13_1->id, 'user_id' => $peters->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
     }
 
     /**
