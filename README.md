@@ -1,64 +1,140 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Rowe GBBO Sweepscake application
 
-## About Laravel
+## Before you start
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The application can be developed and built on Windows, Linux or MacOS.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+These technologies are required to run the application along with the minimum
+version required. They can be installed within a Docker containerised
+environment, or alternatively on the host machine directly.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* PHP - 8.1
+* Composer - 2.1.11
+* PostgreSQL - 14.1
+* NodeJS - 16.13.2
+* Suitable IDE
 
-## Learning Laravel
+The project is written in PHP and was developed using both PHP Storm and
+Visual Studio Code as IDEs.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## How to configure and deploy the project
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**Important: Do not commit the contents of the .env file to version control -
+it often contains account credentials and other sensitive information**
 
-## Laravel Sponsors
+Start by cloning the app from the git repository.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### App Configuration
 
-### Premium Partners
+The app must be configured by creating a .env file at the root of the project.
+There is an example file `.env.example` at the root of the project which can
+be copied, renamed, and tweaked. 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+This following environment variables should be set:
 
-## Contributing
+| Environment Variable      | Type   | Description                                  |
+|---------------------------|--------|----------------------------------------------|
+| DB_CONNECTION             | String | Type of database, likely `pgsql`             |
+| DB_HOST                   | String | Hostname, likely `localhost`                 |
+| DB_PORT                   | int    | Database port number                         |
+| DB_DATABASE               | String | Database name                                |
+| DB_USERNAME               | String | Database user username                       |
+| DB_PASSWORD               | String | Database user password                       |
+| DB_SCHEMA                 | String | Schema name                                  |
+|                           |        |                                              |
+| MAIL_MAILER               | String |                                              |
+| MAIL_HOST                 | String | Hostname, likely `localhost`                 |
+| MAIL_PORT                 | String | Mail server port                             |
+| MAIL_USERNAME             | String | Mail server username                         |
+| MAIL_PASSWORD             | String | Mail server username                         |
+| MAIL_ENCRYPTION           | String |                                              |
+| MAIL_FROM_ADDRESS         | String | Email address to use as sender email         |
+| MAIL_FROM_NAME            | String | From name to use in sender email             |
+|                           |        |                                              |
+| SEEDER_ADMIN_PASSWORD     | String |                                              |
+| SEEDER_USER_PASSWORD      | String |                                              |
+| SEEDER_USERS_EMAIL_DOMAIN | String |                                              |
+| SEEDER_USERS_2021         | String | Comma separated list mapping users to bakers |
+| SEEDER_USERS_2022_1       | String | Comma separated list mapping users to bakers |
+| SEEDER_USERS_2022_2       | String | Comma separated list mapping users to bakers |
+|                           |        |                                              |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Database Migrations
 
-## Code of Conduct
+To run the database migrations, enter the following command in the terminal.
+Run this command every time changes to the migrations are made.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+`php artisan migrate`
 
-## Security Vulnerabilities
+To view the currently applied migrations, run:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+`php artisan migrate:status`
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Compiling CSS and Javascript
+
+Installing the JavaScript dependencies:
+
+`npm install`
+
+The app stylesheets and javascript needs to be compiled when the app is first
+run, every time a new branch is checked out, or a styling change is made.
+
+If stylesheets/javascript are not being changed then they can be compiled once
+without recompiling every time a change is made:
+
+`npm run build`
+
+However, if styles or javascript are being tweaked, the following can be run to
+recompile every time a change is made:
+
+`npm run dev` 
+
+If for any reason the content cannot be served on another port using the dev
+command above, for example the content security policy getting in the way, the
+following command can be run to recompile the assets evert time a change is
+made.
+
+`npm run watch` Note: This is much slower to run compared to the above command.
+
+For production environments, to create a compressed app.css file, use this:
+
+`npm run prod`
+
+When using PHP Storm IDE this can be configured as a Run Configuration. 
+
+
+### Running the App Locally
+
+To run the app locally run the following command at the project route in the
+terminal.
+
+`php artisan serve`
+
+When using PHP Storm IDE this can be configured as a Run Configuration.
+
+If run with default settings then this will be accessible on
+
+http://localhost:8000/
+
+### Local PostGIS database
+
+Running postgres using a docker container:
+
+```shell
+docker run --name postgres -i -t -e POSTGRES_PASSWORD=<password> -p 5432:5432 postgres
+```
+
+### Local email server
+
+The application makes use of emails for user registration, password reset and
+notification. As such is it convenient in a local development environment to
+have a development SMTP server running. smtp4dev (see
+https://github.com/rnwood/smtp4dev) works well.
+
+Running smtp4dev using a docker container:
+
+```shell
+docker run -p 3000:80 -p 25:25 -d --name smtp4dev rnwood/smtp4dev
+```
