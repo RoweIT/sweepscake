@@ -4,11 +4,12 @@
 name: Build and deploy PHP app to Azure Web App - rowe-sweepscake
 
 on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
+  release: 
+    types: released
+#  push:
+#    branches:
+#      - main
+#  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -35,7 +36,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
 
       - name: Remove node_modules
         run: rm -rf node_modules
