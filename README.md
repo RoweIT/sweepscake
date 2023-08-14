@@ -10,7 +10,7 @@ version required. They can be installed within a Docker containerised
 environment, or alternatively on the host machine directly.
 
 * PHP - 8.1
-* Composer - 2.1.11
+* Composer - 2.5.8
 * PostgreSQL - 14.1
 * NodeJS - 16.13.2
 * Suitable IDE
