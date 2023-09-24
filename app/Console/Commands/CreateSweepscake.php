@@ -106,10 +106,11 @@ class CreateSweepscake extends Command
         $users = [];
         foreach ($mappings as $mapping) {
             $pair = explode(':', $mapping);
-            $userInfo = trim($pair[0]);
-            $name = $this->generateName($userInfo);
-            $username = $this->generateUsername($userInfo);
-            $email = $userInfo . '@' . $emailDomain;
+            $email = trim($pair[0]);
+
+            $email_name = strtok($email, '@');
+            $name = $this->generateName($email_name);
+            $username = $this->generateUsername($email_name);
 
             $user = User::findByEmail($email);
             if (!$user) {
@@ -117,11 +118,15 @@ class CreateSweepscake extends Command
                 // email_verified_at not fillable so set explicitly
                 $user->email_verified_at = $now;
                 $user->save();
-                $this->info("Created user name: $name, email: $email, password: $password");
+                echo("Created user name: $name, $username: $username, email: $email, password: $password");
+                echo(PHP_EOL);
+                $this->info("Created user name: $name, $username: $username, email: $email, password: $password");
             } else {
                 $user->username = $username;
                 $user->email_verified_at = $now;
                 $user->save();
+                echo("Updating existing user record for user: $username");
+                echo(PHP_EOL);
                 $this->info("Updating existing user record for user: $username");
             }
 
@@ -132,6 +137,8 @@ class CreateSweepscake extends Command
                 $bakerSlug = trim($pair[1]);
                 $baker = Baker::findBySlug($bakerSlug);
                 if (!$baker) {
+                    echo("Unable to find baker $bakerSlug to add to user $username");
+                    echo(PHP_EOL);
                     $this->error("Unable to find baker $bakerSlug to add to user $username");
                 }
             }
@@ -145,6 +152,8 @@ class CreateSweepscake extends Command
                 // $baker->sweepscakes()->attach($sweepscake21->id, ['user_id' => $user->id]);
                 $user->sweepscakes()->attach($sweepscake->id, ['baker_id' => $baker->id ?? null]);
             } catch (QueryException $e) {
+                echo("Unable to add mapping for sweepscake: $sweepscake->id, user: $user->id, baker $baker->id; ignoring");
+                echo(PHP_EOL);
                 $this->warn("Unable to add mapping for sweepscake: $sweepscake->id, user: $user->id, baker $baker->id; ignoring");
             }
 

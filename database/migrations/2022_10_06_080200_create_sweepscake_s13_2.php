@@ -39,7 +39,7 @@ return new class extends Migration
         Event::create(['week_id' => $week5->id, 'baker_id' => $dawn->id, 'sweepscake_id' => $sweepscake13_2->id, 'user_id' => $sam->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
 
         $abdul = Baker::findBySlug('abdul-13');
-        $hannah = User::findByUsername('hannah');
+        $hannah = User::findByUsername('hannahr');
         Event::create(['week_id' => $week5->id, 'baker_id' => $abdul->id, 'sweepscake_id' => $sweepscake13_2->id, 'user_id' => $hannah->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
 
         $sandro = Baker::findBySlug('sandro-13');
@@ -65,7 +65,7 @@ return new class extends Migration
         $week7 = $series->weeks()->where(['week_num' => 7])->first();
     
         $syabira = Baker::findBySlug('syabira-13');
-        $steve = User::findByUsername('steve');
+        $steve = User::findByUsername('stever');
         Event::create(['week_id' => $week7->id, 'baker_id' => $syabira->id, 'sweepscake_id' => $sweepscake13_2->id, 'user_id' => $steve->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
 
     }
