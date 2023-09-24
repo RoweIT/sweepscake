@@ -17,9 +17,11 @@
                     <span class="mt-2 block text-gray-800 text-sm">
                         Age: {{ $baker->age }}
                     </span>
+                    @if(!empty($baker->job))
                     <span class="mt-2 block text-gray-800 text-sm">
                         Job: {{ $baker->job }}
                     </span>
+                    @endif
                 </div>
             </header>
             <div class="mt-2 space-y-4">
