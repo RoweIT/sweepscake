@@ -15,17 +15,15 @@
                 <x-sweepscake-detail-card :sweepscake="$sweepscake"/>
             </div>
 
+            @if ($bakerScorecards->count())
             <h2 class="text-xl mt-4">Your Bakers</h2>
 
             <div class="mt-4 bg-white overflow-hidden sm:rounded-lg">
-                @if ($bakerScorecards->count())
-                        @foreach ($bakerScorecards as $bs)
-                            <x-baker-detail-card :baker="$bs['baker']" :scorecard="$bs['scorecard']"/>
-                        @endforeach
-                @else
-                    <p class="text-center">You have no bakers for this sweepscake.</p>
-                @endif
+                @foreach ($bakerScorecards as $bs)
+                    <x-baker-detail-card :baker="$bs['baker']" :scorecard="$bs['scorecard']"/>
+                @endforeach
             </div>
+            @endif
 
             <h2 class="text-xl mt-4">Scorecard</h2>
 
@@ -70,7 +68,7 @@
                         <tr class="{{ $bus['scorecard']?->isEliminated() ? 'bg-gray-100' : 'bg-white'  }} border-b border-x dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row"
                                 class="py-4 px-6 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $bus['baker']->name }}
+                                <a href="/bakers/{{ $bus['baker']->slug }}">{{ $bus['baker']->name }}</a>
                             </th>
                             <td class="py-4 px-6" x-username="{{ $bus['user']->username }}">
                                 {{ $bus['user']->name }}
