@@ -26,6 +26,15 @@ return new class extends Migration
                 '--user-password' => env('SEEDER_USER_PASSWORD'),
                 '--user-baker-mappings' => $userBakerMappings,
             ]);
+
+            $sweepscake14_1 = Sweepscake::findBySlug('sweepscake-14-1');
+            $series = $sweepscake14_1->series()->first();
+
+            # week 2
+            $week2 = $series->weeks()->where(['week_num' => 2])->first();
+            $saku = Baker::findBySlug('saku-14');
+            $hannahr = User::findByUsername('hannahr');
+            Event::create(['week_id' => $week2->id, 'baker_id' => $saku->id, 'sweepscake_id' => $sweepscake14_1->id, 'user_id' => $hannahr->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
         }
     }
 
