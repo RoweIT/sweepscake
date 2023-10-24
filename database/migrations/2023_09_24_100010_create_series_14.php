@@ -106,6 +106,17 @@ return new class extends Migration
             'theme' => 'Biscuits', 'signature' => 'Marshmallow Biscuits', 'technical' => 'Custard Creams', 'showstopper' => 'Illusion Biscuit Display'
         ]);
 
+        $s14_wk3 = Week::create([
+            'series_id' => $series14->id,
+            'week_num' => 3,
+            'theme' => 'Bread', 'signature' => 'Cottage Loaf', 'technical' => 'Devonshire Splits', 'showstopper' => 'Plaited Centrepiece Loaf'
+        ]);
+
+        $s14_wk4 = Week::create([
+            'series_id' => $series14->id,
+            'week_num' => 4,
+            'theme' => 'Chocolate', 'signature' => 'Chocolate Torte', 'technical' => 'White Chocolate and Blackberry Cheesecake', 'showstopper' => 'Edible Chocolate Box Cake'
+        ]);
 
 
         Event::create(['week_id' => $s14_wk1->id, 'baker_id' => $dan->id, 'type' => EVENT::TYPE_STAR_BAKER]);
@@ -123,6 +134,19 @@ return new class extends Migration
         Event::create(['week_id' => $s14_wk2->id, 'baker_id' => $keith->id, 'type' => EVENT::TYPE_ELIMINATED]);
         Event::create(['week_id' => $s14_wk2->id, 'baker_id' => $tasha->id, 'type' => EVENT::TYPE_HANDSHAKE]);
         Event::create(['week_id' => $s14_wk2->id, 'baker_id' => $josh->id, 'type' => EVENT::TYPE_HANDSHAKE]);
+
+        Event::create(['week_id' => $s14_wk3->id, 'baker_id' => $tasha->id, 'type' => EVENT::TYPE_STAR_BAKER]);
+        Event::create(['week_id' => $s14_wk3->id, 'baker_id' => $saku->id, 'type' => EVENT::TYPE_TECHNICAL_FIRST]);
+        Event::create(['week_id' => $s14_wk3->id, 'baker_id' => $tasha->id, 'type' => EVENT::TYPE_TECHNICAL_SECOND]);
+        Event::create(['week_id' => $s14_wk3->id, 'baker_id' => $dana->id, 'type' => EVENT::TYPE_TECHNICAL_THIRD]);
+        Event::create(['week_id' => $s14_wk3->id, 'baker_id' => $dan->id, 'type' => EVENT::TYPE_TECHNICAL_LAST]);
+        Event::create(['week_id' => $s14_wk3->id, 'baker_id' => $abbi->id, 'type' => EVENT::TYPE_ELIMINATED]);
+
+        Event::create(['week_id' => $s14_wk4->id, 'baker_id' => $matty->id, 'type' => EVENT::TYPE_STAR_BAKER]);
+        Event::create(['week_id' => $s14_wk4->id, 'baker_id' => $dan->id, 'type' => EVENT::TYPE_TECHNICAL_FIRST]);
+        Event::create(['week_id' => $s14_wk4->id, 'baker_id' => $matty->id, 'type' => EVENT::TYPE_TECHNICAL_SECOND]);
+        Event::create(['week_id' => $s14_wk4->id, 'baker_id' => $rowan->id, 'type' => EVENT::TYPE_TECHNICAL_THIRD]);
+        Event::create(['week_id' => $s14_wk4->id, 'baker_id' => $saku->id, 'type' => EVENT::TYPE_TECHNICAL_LAST]);
     }
 
     /**

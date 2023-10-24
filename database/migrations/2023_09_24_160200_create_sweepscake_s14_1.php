@@ -35,6 +35,17 @@ return new class extends Migration
             $saku = Baker::findBySlug('saku-14');
             $hannahr = User::findByUsername('hannahr');
             Event::create(['week_id' => $week2->id, 'baker_id' => $saku->id, 'sweepscake_id' => $sweepscake14_1->id, 'user_id' => $hannahr->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
+
+            # week 4
+            $week4 = $series->weeks()->where(['week_num' => 4])->first();
+
+            $matty = Baker::findBySlug('matty-14');
+            $garyr = User::findByUsername('garyr');
+            Event::create(['week_id' => $week4->id, 'baker_id' => $matty->id, 'sweepscake_id' => $sweepscake14_1->id, 'user_id' => $garyr->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
+
+            $rowan = Baker::findBySlug('rowan-14');
+            $heleni = User::findByUsername('heleni');
+            Event::create(['week_id' => $week4->id, 'baker_id' => $rowan->id, 'sweepscake_id' => $sweepscake14_1->id, 'user_id' => $heleni->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
         }
     }
 
