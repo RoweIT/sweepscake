@@ -38,28 +38,28 @@
                             User
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            handshake
+                            H
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            star baker
+                            SB
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            technical 1/2/3
+                            T 1/2/3
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            technical last
+                            TL
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            RA played wk
+                            RA WK
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            RA score
+                            RA SC
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            score
+                            SC
                         </th>
                         <th scope="col" class="py-3 px-6">
-                            eliminated
+                            EL
                         </th>
                     </tr>
                     </thead>

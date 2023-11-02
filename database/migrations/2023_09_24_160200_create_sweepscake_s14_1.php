@@ -46,6 +46,24 @@ return new class extends Migration
             $rowan = Baker::findBySlug('rowan-14');
             $heleni = User::findByUsername('heleni');
             Event::create(['week_id' => $week4->id, 'baker_id' => $rowan->id, 'sweepscake_id' => $sweepscake14_1->id, 'user_id' => $heleni->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
+
+            # week 5
+            $week5 = $series->weeks()->where(['week_num' => 5])->first();
+
+            $dan = Baker::findBySlug('dan-14');
+            $alexs = User::findByUsername('alexs');
+            Event::create(['week_id' => $week5->id, 'baker_id' => $dan->id, 'sweepscake_id' => $sweepscake14_1->id, 'user_id' => $alexs->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
+
+            $josh = Baker::findBySlug('josh-14');
+            $edwardw = User::findByUsername('edwardw');
+            Event::create(['week_id' => $week5->id, 'baker_id' => $josh->id, 'sweepscake_id' => $sweepscake14_1->id, 'user_id' => $edwardw->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
+
+            # week 6
+            $week6 = $series->weeks()->where(['week_num' => 6])->first();
+
+            $dana = Baker::findBySlug('dana-14');
+            $saraho = User::findByUsername('saraho');
+            Event::create(['week_id' => $week6->id, 'baker_id' => $dana->id, 'sweepscake_id' => $sweepscake14_1->id, 'user_id' => $saraho->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
         }
     }
 
