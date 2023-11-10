@@ -121,13 +121,19 @@ return new class extends Migration
         $s14_wk5 = Week::create([
             'series_id' => $series14->id,
             'week_num' => 5,
-            'theme' => 'Pasrty', 'signature' => 'Savoury Picnic Pies', 'technical' => 'Dauphinoise Pithivier', 'showstopper' => 'Decorative Sweet Pie Display'
+            'theme' => 'Pastry', 'signature' => 'Savoury Picnic Pies', 'technical' => 'Dauphinoise Pithivier', 'showstopper' => 'Decorative Sweet Pie Display'
         ]);
 
         $s14_wk6 = Week::create([
             'series_id' => $series14->id,
             'week_num' => 6,
             'theme' => 'Botanical', 'signature' => 'Spiced Buns', 'technical' => 'Lemon and Thyme Drizzle Cake', 'showstopper' => 'Floral Dessert'
+        ]);
+
+        $s14_wk7 = Week::create([
+            'series_id' => $series14->id,
+            'week_num' => 7,
+            'theme' => 'Desserts', 'signature' => 'Crème Caramels', 'technical' => 'Orange and Ginger Treacle Puddings', 'showstopper' => 'Meringue Bombe'
         ]);
 
         Event::create(['week_id' => $s14_wk1->id, 'baker_id' => $dan->id, 'type' => EVENT::TYPE_STAR_BAKER]);
@@ -174,6 +180,13 @@ return new class extends Migration
         Event::create(['week_id' => $s14_wk6->id, 'baker_id' => $dan->id, 'type' => EVENT::TYPE_TECHNICAL_THIRD]);
         Event::create(['week_id' => $s14_wk6->id, 'baker_id' => $tasha->id, 'type' => EVENT::TYPE_TECHNICAL_LAST]);
         Event::create(['week_id' => $s14_wk6->id, 'baker_id' => $dana->id, 'type' => EVENT::TYPE_ELIMINATED]);
+
+        Event::create(['week_id' => $s14_wk7->id, 'baker_id' => $dan->id, 'type' => EVENT::TYPE_STAR_BAKER]);
+        Event::create(['week_id' => $s14_wk7->id, 'baker_id' => $tasha->id, 'type' => EVENT::TYPE_TECHNICAL_FIRST]);
+        Event::create(['week_id' => $s14_wk7->id, 'baker_id' => $dan->id, 'type' => EVENT::TYPE_TECHNICAL_SECOND]);
+        Event::create(['week_id' => $s14_wk7->id, 'baker_id' => $josh->id, 'type' => EVENT::TYPE_TECHNICAL_THIRD]);
+        Event::create(['week_id' => $s14_wk7->id, 'baker_id' => $matty->id, 'type' => EVENT::TYPE_TECHNICAL_LAST]);
+        Event::create(['week_id' => $s14_wk7->id, 'baker_id' => $saku->id, 'type' => EVENT::TYPE_ELIMINATED]);
     }
 
     /**
