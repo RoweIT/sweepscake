@@ -136,6 +136,12 @@ return new class extends Migration
             'theme' => 'Desserts', 'signature' => 'Crème Caramels', 'technical' => 'Orange and Ginger Treacle Puddings', 'showstopper' => 'Meringue Bombe'
         ]);
 
+        $s14_wk8 = Week::create([
+            'series_id' => $series14->id,
+            'week_num' => 8,
+            'theme' => 'Party', 'signature' => 'Sausage Rolls', 'technical' => 'Chocolate Caterpillar Cake', 'showstopper' => '\'Anything But Beige\' Buffet'
+        ]);
+
         Event::create(['week_id' => $s14_wk1->id, 'baker_id' => $dan->id, 'type' => EVENT::TYPE_STAR_BAKER]);
         Event::create(['week_id' => $s14_wk1->id, 'baker_id' => $dan->id, 'type' => EVENT::TYPE_TECHNICAL_FIRST]);
         Event::create(['week_id' => $s14_wk1->id, 'baker_id' => $amos->id, 'type' => EVENT::TYPE_TECHNICAL_SECOND]);
@@ -187,6 +193,14 @@ return new class extends Migration
         Event::create(['week_id' => $s14_wk7->id, 'baker_id' => $josh->id, 'type' => EVENT::TYPE_TECHNICAL_THIRD]);
         Event::create(['week_id' => $s14_wk7->id, 'baker_id' => $matty->id, 'type' => EVENT::TYPE_TECHNICAL_LAST]);
         Event::create(['week_id' => $s14_wk7->id, 'baker_id' => $saku->id, 'type' => EVENT::TYPE_ELIMINATED]);
+
+        Event::create(['week_id' => $s14_wk8->id, 'baker_id' => $matty->id, 'type' => EVENT::TYPE_STAR_BAKER]);
+        Event::create(['week_id' => $s14_wk8->id, 'baker_id' => $tasha->id, 'type' => EVENT::TYPE_TECHNICAL_FIRST]);
+        Event::create(['week_id' => $s14_wk8->id, 'baker_id' => $cristy->id, 'type' => EVENT::TYPE_TECHNICAL_SECOND]);
+        Event::create(['week_id' => $s14_wk8->id, 'baker_id' => $matty->id, 'type' => EVENT::TYPE_TECHNICAL_THIRD]);
+        Event::create(['week_id' => $s14_wk8->id, 'baker_id' => $dan->id, 'type' => EVENT::TYPE_TECHNICAL_LAST]);
+        Event::create(['week_id' => $s14_wk8->id, 'baker_id' => $cristy->id, 'type' => EVENT::TYPE_ELIMINATED]);
+        Event::create(['week_id' => $s14_wk8->id, 'baker_id' => $matty->id, 'type' => EVENT::TYPE_HANDSHAKE]);
     }
 
     /**
