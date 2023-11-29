@@ -70,6 +70,14 @@ return new class extends Migration
             $matty = Baker::findBySlug('matty-14');
             $zacheryh = User::findByUsername('zacheryh');
             Event::create(['week_id' => $week8->id, 'baker_id' => $matty->id, 'sweepscake_id' => $sweepscake14_2->id, 'user_id' => $zacheryh->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
+
+            # week 9
+            $week9 = $series->weeks()->where(['week_num' => 9])->first();
+
+            $josh = Baker::findBySlug('josh-14');
+            $suzanne = User::findByUsername('suzanne');
+            Event::create(['week_id' => $week9->id, 'baker_id' => $josh->id, 'sweepscake_id' => $sweepscake14_2->id, 'user_id' => $suzanne->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
+
         }
     }
 

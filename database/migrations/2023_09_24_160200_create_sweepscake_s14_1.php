@@ -64,6 +64,13 @@ return new class extends Migration
             $dana = Baker::findBySlug('dana-14');
             $saraho = User::findByUsername('saraho');
             Event::create(['week_id' => $week6->id, 'baker_id' => $dana->id, 'sweepscake_id' => $sweepscake14_1->id, 'user_id' => $saraho->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
+
+            # week 9
+            $week9 = $series->weeks()->where(['week_num' => 9])->first();
+
+            $tasha = Baker::findBySlug('tasha-14');
+            $beth = User::findByUsername('beth');
+            Event::create(['week_id' => $week9->id, 'baker_id' => $tasha->id, 'sweepscake_id' => $sweepscake14_1->id, 'user_id' => $beth->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
         }
     }
 
