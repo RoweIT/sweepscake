@@ -16,7 +16,10 @@ return new class extends Migration
      */
     public function up()
     {
-        $userBakerMappings = env('SEEDER_USERS_2023_2');
+        # $userBakerMappings = env('SEEDER_USERS_2023_2');
+        # hardcoded for convenience
+        $userBakerMappings = "suzanne:josh-14,zacheryh:matty-14,grainnef:dan-14,fayd:tasha-14,joes:cristy-14,joer:abbi-14,peters:rowan-14,tristany:amos-14,pauli:dana-14,paulr:saku-14,justint:keith-14,stever:nicky-14";
+
         if ($userBakerMappings) {
             Artisan::call('sweepscake:create', [
                 'name' => 'Sweepscake 2023 #2',

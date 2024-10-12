@@ -1,0 +1,41 @@
+#
+# Based on example from https://www.docker.com/blog/how-to-use-the-postgres-docker-official-image/
+#
+services:
+  app:
+    build:
+      context: .
+    depends_on:
+      db:
+        condition: service_started
+    ports:
+      - "8080:8080"
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+      POSTGRES_DB: sweepscake
+    volumes:
+      - pg-data:/var/lib/postgresql/data 
+ 
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@example.org
+      PGADMIN_DEFAULT_PASSWORD: pgadmin123
+      PGADMIN_DISABLE_POSTFIX: true
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin      
+
+    ports:
+      - 8081:80
+
+volumes:
+  pg-data:
+  pgadmin-data:
