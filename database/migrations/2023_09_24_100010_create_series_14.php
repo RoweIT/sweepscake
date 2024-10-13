@@ -18,7 +18,7 @@ return new class extends Migration
     {
         $series14 = Series::create([
             'slug' => 'gbbo-series-14', 'name' => 'Great British Bake Off 2023 (series 14)',
-            'start_on' => new Carbon('2023-09-26'), 'status' => Series::STATUS_ACTIVE, 'image_path' => 'series/gbbo-series-14.avif'
+            'start_on' => new Carbon('2023-09-26'), 'status' => Series::STATUS_COMPLETE, 'image_path' => 'series/gbbo-series-14.avif'
         ]);
 
         $abbi = Baker::create([

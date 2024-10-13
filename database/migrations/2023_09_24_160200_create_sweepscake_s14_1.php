@@ -18,7 +18,7 @@ return new class extends Migration
     {
         # $userBakerMappings = env('SEEDER_USERS_2023_1');
         # hardcoded for convenience
-        $userBakerMappings = "alexs:dan-14,garyr:matty-14,edwardw:josh-14,beth:tasha-14,robo:cristy-14,beckyw:abbi-14,heleni:rowan-14,sam:amos-14,saraho:dana-14,hannahr:saku-14,jessi:keith-14,aimees:nicky-14";
+        $userBakerMappings = "alexs:dan-14,garyr:matty-14,edwardw:josh-14,beth:tasha-14,robo:cristy-14,beckyw:abbi-14,heleni:rowan-14,saml:amos-14,saraho:dana-14,hannahr:saku-14,jessi:keith-14,aimeef:nicky-14";
 
         if ($userBakerMappings) {
             Artisan::call('sweepscake:create', [

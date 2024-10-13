@@ -18,7 +18,7 @@ class BakerController extends Controller
      */
     public function index(): View|Factory|Application
     {
-        $series = "gbbo-series-14";
+        $series = "gbbo-series-15";
 
         $bakers = Baker::whereHas('series', function (Builder $query) use ($series) {
             $query->where('slug', '=', $series);

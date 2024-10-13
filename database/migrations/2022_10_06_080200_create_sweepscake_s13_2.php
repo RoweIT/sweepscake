@@ -18,7 +18,7 @@ return new class extends Migration
     {
         # $userBakerMappings = env('SEEDER_USERS_2022_2');
         # hardcoded for convenience
-        $userBakerMappings = "jessi:james-13,beckyw:sandro-13,joek:kevin-13,hannahr:abdul-13,joesr:maisam-13,stever:syabira-13,joes:carole-13,sam:dawn-13,robo:rebs-13,deannad:maxy-13,justint:janusz-13,paulr:will-13";
+        $userBakerMappings = "jessi:james-13,beckyw:sandro-13,joek:kevin-13,hannahr:abdul-13,joesr:maisam-13,stever:syabira-13,joes:carole-13,saml:dawn-13,robo:rebs-13,deannad:maxy-13,justint:janusz-13,paulr:will-13";
 
         if ($userBakerMappings) {
             Artisan::call('sweepscake:create', [
@@ -38,8 +38,8 @@ return new class extends Migration
         $week5 = $series->weeks()->where(['week_num' => 5])->first();
 
         $dawn = Baker::findBySlug('dawn-13');
-        $sam = User::findByUsername('sam');
-        Event::create(['week_id' => $week5->id, 'baker_id' => $dawn->id, 'sweepscake_id' => $sweepscake13_2->id, 'user_id' => $sam->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
+        $saml = User::findByUsername('saml');
+        Event::create(['week_id' => $week5->id, 'baker_id' => $dawn->id, 'sweepscake_id' => $sweepscake13_2->id, 'user_id' => $saml->id, 'type' => EVENT::TYPE_RAISING_AGENT]);
 
         $abdul = Baker::findBySlug('abdul-13');
         $hannah = User::findByUsername('hannahr');

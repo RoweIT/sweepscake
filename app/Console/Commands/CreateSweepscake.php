@@ -106,13 +106,12 @@ class CreateSweepscake extends Command
         $users = [];
         foreach ($mappings as $mapping) {
             $pair = explode(':', $mapping);
-            $email = trim($pair[0]);
+            $username = trim($pair[0]);
 
-            $email_name = strtok($email, '@');
-            $name = $this->generateName($email_name);
-            $username = $this->generateUsername($email_name);
+            $name = $this->generateName($username);
+            $email = $username . "@" . $emailDomain;
 
-            $user = User::findByEmail($email);
+            $user = User::findByUsername($username);
             if (!$user) {
                 $user = User::create(['name' => $name, 'username' => $username, 'email' => $email, 'password' => bcrypt($password)]);
                 // email_verified_at not fillable so set explicitly
