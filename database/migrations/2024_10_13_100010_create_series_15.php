@@ -18,7 +18,7 @@ return new class extends Migration
     {
         $series15 = Series::create([
             'slug' => 'gbbo-series-15', 'name' => 'Great British Bake Off 2024 (series 15)',
-            'start_on' => new Carbon('2023-10-24'), 'status' => Series::STATUS_ACTIVE, 'image_path' => 'series/gbbo-series-15.avif'
+            'start_on' => new Carbon('2024-10-24'), 'status' => Series::STATUS_ACTIVE, 'image_path' => 'series/gbbo-series-15.avif'
         ]);
 
         $andy = Baker::create([
@@ -112,6 +112,18 @@ return new class extends Migration
             'theme' => 'Bread', 'signature' => 'Savoury Buns Loaf', 'technical' => 'Plaited Loaf', 'showstopper' => 'Bread Cornucopia Display'
         ]);
 
+        $s15_wk4 = Week::create([
+            'series_id' => $series15->id,
+            'week_num' => 4,
+            'theme' => 'Caramel', 'signature' => '12 Caramel Biscuits', 'technical' => 'Pear Tarte Tatin', 'showstopper' => 'Caramel Mousse Cake'
+        ]);
+
+        $s15_wk5 = Week::create([
+            'series_id' => $series15->id,
+            'week_num' => 5,
+            'theme' => 'Pastry', 'signature' => '12 Frangipane Tarts', 'technical' => 'Spanakopita', 'showstopper' => 'Paris-Brest'
+        ]);
+
 
         Event::create(['week_id' => $s15_wk1->id, 'baker_id' => $john->id, 'type' => EVENT::TYPE_STAR_BAKER]);
         Event::create(['week_id' => $s15_wk1->id, 'baker_id' => $georgie->id, 'type' => EVENT::TYPE_TECHNICAL_FIRST]);
@@ -136,6 +148,20 @@ return new class extends Migration
         Event::create(['week_id' => $s15_wk3->id, 'baker_id' => $dylan->id, 'type' => EVENT::TYPE_TECHNICAL_LAST]);
         Event::create(['week_id' => $s15_wk3->id, 'baker_id' => $john->id, 'type' => EVENT::TYPE_ELIMINATED]);
         Event::create(['week_id' => $s15_wk1->id, 'baker_id' => $dylan->id, 'type' => EVENT::TYPE_HANDSHAKE]);
+
+        Event::create(['week_id' => $s15_wk4->id, 'baker_id' => $georgie->id, 'type' => EVENT::TYPE_STAR_BAKER]);
+        Event::create(['week_id' => $s15_wk4->id, 'baker_id' => $georgie->id, 'type' => EVENT::TYPE_TECHNICAL_FIRST]);
+        Event::create(['week_id' => $s15_wk4->id, 'baker_id' => $christiaan->id, 'type' => EVENT::TYPE_TECHNICAL_SECOND]);
+        Event::create(['week_id' => $s15_wk4->id, 'baker_id' => $sumayah->id, 'type' => EVENT::TYPE_TECHNICAL_THIRD]);
+        Event::create(['week_id' => $s15_wk4->id, 'baker_id' => $andy->id, 'type' => EVENT::TYPE_TECHNICAL_LAST]);
+        Event::create(['week_id' => $s15_wk4->id, 'baker_id' => $mike->id, 'type' => EVENT::TYPE_ELIMINATED]);
+
+        Event::create(['week_id' => $s15_wk5->id, 'baker_id' => $gill->id, 'type' => EVENT::TYPE_STAR_BAKER]);
+        Event::create(['week_id' => $s15_wk5->id, 'baker_id' => $dylan->id, 'type' => EVENT::TYPE_TECHNICAL_FIRST]);
+        Event::create(['week_id' => $s15_wk5->id, 'baker_id' => $christiaan->id, 'type' => EVENT::TYPE_TECHNICAL_SECOND]);
+        Event::create(['week_id' => $s15_wk5->id, 'baker_id' => $nelly->id, 'type' => EVENT::TYPE_TECHNICAL_THIRD]);
+        Event::create(['week_id' => $s15_wk5->id, 'baker_id' => $gill->id, 'type' => EVENT::TYPE_TECHNICAL_LAST]);
+        Event::create(['week_id' => $s15_wk5->id, 'baker_id' => $andy->id, 'type' => EVENT::TYPE_ELIMINATED]);
     }
 
     /**

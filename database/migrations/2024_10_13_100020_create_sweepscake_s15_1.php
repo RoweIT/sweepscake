@@ -18,7 +18,7 @@ return new class extends Migration
     {
         # $userBakerMappings = env('SEEDER_USERS_2023_1');
         # hardcoded for convenience
-        $userBakerMappings = "melanies:nelly-15,justint:georgie-15,sam:jeff-15,livoc:christiaan-15,joes:hazel-15,bens:andy-15,paulr:dylan-15,lucyb:illiyin-15,fayd:sumayah-15,pauli:mike-15,terril:gill-15,alexs:john-15";
+        $userBakerMappings = "melanies:nelly-15,justint:georgie-15,saml:jeff-15,livoc:christiaan-15,joes:hazel-15,bens:andy-15,paulr:dylan-15,lucyb:illiyin-15,fayd:sumayah-15,pauli:mike-15,terril:gill-15,alexs:john-15";
 
         if ($userBakerMappings) {
             Artisan::call('sweepscake:create', [
@@ -29,7 +29,7 @@ return new class extends Migration
                 '--user-password' => env('SEEDER_USER_PASSWORD'),
                 '--user-baker-mappings' => $userBakerMappings,
             ]);
-
+            
             $sweepscake15_1 = Sweepscake::findBySlug('sweepscake-15-1');
             $series = $sweepscake15_1->series()->first();
         }

@@ -163,13 +163,14 @@ class CreateSweepscake extends Command
 
     public function generateName(string $userInfo)
     {
-        $name = ucwords(str_replace('.', ' ', trim($userInfo)));
+        $name = str_replace('.', ' ', trim($userInfo));
+        $name = ucwords(substr($name, 0, -1)) . " " . ucwords(substr($name, -1));
         return $name;
     }
 
     public function generateUsername(string $userInfo)
     {
-        $name = strtolower(str_replace('.', ' ', trim($userInfo)));
+        $name = strtolower();
 
          $separate = explode(" ", $name);
 
